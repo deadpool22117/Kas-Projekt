@@ -16,5 +16,8 @@ public class Ledsager {
         this.tilmelding = tilmelding;
     }
 
-    public addUdflugt()
+    public void addUdflugt(){
+
+    }
+
 }
