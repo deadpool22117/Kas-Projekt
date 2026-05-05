@@ -17,7 +17,7 @@ public class Tilmelding {
     private Konference konference;
     private Hotel hotel;
     private Deltager deltager;
-    private ArrayList<Tillæg> valgteTillæg = new ArrayList<>();
+    private ArrayList<Tillaeg> valgteTillaeg = new ArrayList<>();
 
     public Tilmelding(int tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager, Hotel hotel) {
         this.tilmeldingID = tilmeldingID;
@@ -34,8 +34,8 @@ public class Tilmelding {
         return hotel;
     }
 
-    public ArrayList<Tillæg> getValgteTillæg() {
-        return valgteTillæg;
+    public ArrayList<Tillaeg> getValgteTillaeg() {
+        return valgteTillaeg;
     }
 
 }

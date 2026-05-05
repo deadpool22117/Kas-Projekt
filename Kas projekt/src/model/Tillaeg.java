@@ -2,14 +2,12 @@ package model;
 
 import org.jspecify.annotations.NullMarked;
 
-import java.util.ArrayList;
-
 @NullMarked
-public class Tillæg {
+public class Tillaeg {
     private String navn;
     private double pris;
 
-    public Tillæg(String navn, double pris) {
+    public Tillaeg(String navn, double pris) {
         this.navn = navn;
         this.pris = pris;
     }
