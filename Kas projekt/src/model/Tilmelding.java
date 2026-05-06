@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @NullMarked
 
 public class Tilmelding {
-    private int tilmeldingID;
+    private String tilmeldingID;
     private LocalDate ankomstDato;
     private LocalDate afrejseDato;
     private boolean erForedragsHolder;
@@ -19,7 +19,7 @@ public class Tilmelding {
     private Deltager deltager;
     private ArrayList<Tillæg> valgteTillæg = new ArrayList<>();
 
-    public Tilmelding(int tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager, Hotel hotel) {
+    public Tilmelding(String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager, Hotel hotel) {
         this.tilmeldingID = tilmeldingID;
         this.ankomstDato = ankomstDato;
         this.afrejseDato = afrejseDato;
