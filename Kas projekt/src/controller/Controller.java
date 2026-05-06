@@ -19,6 +19,7 @@ public class Controller {
         Tilmelding tilmelding = new Tilmelding(tilmeldingID, ankomstDato, afrejseDato, erForedragsHolder, konference, deltager);
         konference.addTilmelding(tilmelding);
         deltager.addTilmelding(tilmelding);
+        hotel.addTilmelding(tilmelding);
         return tilmelding;
     }
 
@@ -44,6 +45,12 @@ public class Controller {
         Deltager deltager = new Deltager(navn, adresse, mobil,byLand);
         Storage.storeDeltager(deltager);
         return deltager;
+    }
+
+    public static Tillaeg oprettillaeg(String navn, double pris) {
+        Tillaeg tillaeg = new Tillaeg(navn, pris);
+        Storage.storeTillaeg(tillaeg);
+        return tillaeg;
     }
 
 

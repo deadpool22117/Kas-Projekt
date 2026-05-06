@@ -11,7 +11,7 @@ public class Storage {
     private static final ArrayList<Udflugt> udflugter = new ArrayList<>();
     private static final ArrayList<Hotel> hoteller = new ArrayList<>();
     private static final ArrayList<Ledsager> ledsagere = new ArrayList<>();
-
+    private static final ArrayList<Tillaeg> tillaegs = new ArrayList<>();
 
 
     //--------Konferencer-------
@@ -72,6 +72,12 @@ public class Storage {
 
     public static void storeLedsager(Ledsager ledsager) {
         ledsagere.add(ledsager);
+    }
+
+    //--------Tillæg-------
+
+    public static void storeTillaeg(Tillaeg tillaeg) {
+        tillaegs.add(tillaeg);
     }
 }
 
