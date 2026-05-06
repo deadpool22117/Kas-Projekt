@@ -26,4 +26,6 @@ public class Udflugt {
     public void addLedsager(Ledsager ledsager){
         ledsagere.add(ledsager);
     }
+
+
 }
