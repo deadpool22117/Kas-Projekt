@@ -10,7 +10,7 @@ public class Hotel {
     private double prisEnkelt;
     private double prisDobbelt;
     //LinkAttributter
-    private final ArrayList<Tillaeg> muligeTillæg = new ArrayList<>();
+    private final ArrayList<Tillaeg> muligeTillaeg = new ArrayList<>();
 
     public Hotel(String hotelNavn, double prisEnkelt, double prisDobbelt) {
         this.hotelNavn = hotelNavn;
@@ -19,6 +19,6 @@ public class Hotel {
     }
 
     public void addTillaeg(Tillaeg tillaeg){
-        muligeTillæg.add(tillaeg);
+        muligeTillaeg.add(tillaeg);
     }
 }

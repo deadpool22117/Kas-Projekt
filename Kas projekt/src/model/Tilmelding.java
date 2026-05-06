@@ -3,6 +3,10 @@ package model;
 import org.jspecify.annotations.NullMarked;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 
 @NullMarked
@@ -51,5 +55,6 @@ public class Tilmelding {
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
+
 
 }
