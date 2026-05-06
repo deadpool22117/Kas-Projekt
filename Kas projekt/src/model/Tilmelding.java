@@ -18,9 +18,10 @@ public class Tilmelding {
     private Hotel hotel;
     private Deltager deltager;
     private Ledsager ledsager;
-    private ArrayList<Tillæg> valgteTillæg = new ArrayList<>();
+    private Firma firma;
+    private ArrayList<Tillaeg> valgteTillaeg = new ArrayList<>();
 
-    public Tilmelding(String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager, Hotel hotel) {
+    public Tilmelding(String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager) {
         this.tilmeldingID = tilmeldingID;
         this.ankomstDato = ankomstDato;
         this.afrejseDato = afrejseDato;
@@ -35,12 +36,12 @@ public class Tilmelding {
         return hotel;
     }
 
-    public ArrayList<Tillæg> getValgteTillæg() {
-        return valgteTillæg;
+    public ArrayList<Tillaeg> getValgteTillaeg() {
+        return valgteTillaeg;
     }
 
-    public void setValgteTillæg(ArrayList<Tillæg> valgteTillæg) {
-        this.valgteTillæg = valgteTillæg;
+    public void setValgteTillaeg(ArrayList<Tillaeg> valgteTillaeg) {
+        this.valgteTillaeg = valgteTillaeg;
     }
 
     public void setLedsager(Ledsager ledsager) {

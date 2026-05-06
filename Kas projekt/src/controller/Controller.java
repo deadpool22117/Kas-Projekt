@@ -1,9 +1,9 @@
 package controller;
 
 import model.*;
+
 import org.jspecify.annotations.NullMarked;
 import storage.Storage;
-
 import java.time.LocalDate;
 
 @NullMarked
@@ -16,7 +16,7 @@ public class Controller {
     }
 
     public static Tilmelding opretTilmelding (String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager, Hotel hotel) {
-        Tilmelding tilmelding = new Tilmelding(tilmeldingID, ankomstDato, afrejseDato, erForedragsHolder, konference, deltager, hotel);
+        Tilmelding tilmelding = new Tilmelding(tilmeldingID, ankomstDato, afrejseDato, erForedragsHolder, konference, deltager);
         konference.addTilmelding(tilmelding);
         deltager.addTilmelding(tilmelding);
         return tilmelding;

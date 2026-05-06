@@ -22,4 +22,8 @@ public class Udflugt {
         this.pris = pris;
         this.konference = konference;
     }
+
+    public void addLedsager(Ledsager ledsager){
+        ledsagere.add(ledsager);
+    }
 }
