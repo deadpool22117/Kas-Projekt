@@ -2,11 +2,11 @@ package controller;
 
 import model.*;
 
-import org.jspecify.annotations.NullMarked;
+
 import storage.Storage;
 import java.time.LocalDate;
 
-@NullMarked
+
 public class Controller {
 
     public static Konference opretKonference(String name, LocalDate startDato, LocalDate slutDato, double prisPrDag) {

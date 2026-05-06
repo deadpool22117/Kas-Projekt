@@ -1,10 +1,10 @@
 package model;
 
-import org.jspecify.annotations.NullMarked;
+
 
 import java.util.ArrayList;
 
-@NullMarked
+
 public class Ledsager {
     private String navn;
     //LinkAttributter
@@ -18,5 +18,9 @@ public class Ledsager {
 
     public void addUdflugt(Udflugt udflugt){
         udflugter.add(udflugt);
+    }
+
+    public ArrayList<Udflugt> getUdflugter() {
+        return udflugter;
     }
 }
