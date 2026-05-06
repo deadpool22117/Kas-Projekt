@@ -15,4 +15,17 @@ public class Udflugt {
     //LinkAttributter
     private Konference konference;
     private final ArrayList<Ledsager> ledsagere = new ArrayList<>();
+
+    public Udflugt(String navn, LocalDate dato, double pris, Konference konference) {
+        this.navn = navn;
+        this.dato = dato;
+        this.pris = pris;
+        this.konference = konference;
+    }
+
+    public void addLedsager(Ledsager ledsager){
+        ledsagere.add(ledsager);
+    }
+
+
 }

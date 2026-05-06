@@ -17,6 +17,7 @@ public class Konference {
     //LinkAttributter
     private final ArrayList<Tilmelding> tilmeldinger = new ArrayList<>();
     private final ArrayList<Udflugt> udflugter = new ArrayList<>();
+    private final ArrayList<Hotel> hoteller = new ArrayList<>();
 
     public Konference(String navn, LocalDate startDato, LocalDate slutDato, double prisPrDag) {
         this.navn = navn;
@@ -28,4 +29,9 @@ public class Konference {
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);
     }
+
+    public void addUdflugt(Udflugt udflugt){
+        udflugter.add(udflugt);
+    }
+
 }
