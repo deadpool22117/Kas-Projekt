@@ -27,5 +27,7 @@ public class Udflugt {
         ledsagere.add(ledsager);
     }
 
-
+    public double getPris() {
+        return pris;
+    }
 }

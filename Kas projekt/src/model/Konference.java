@@ -34,4 +34,15 @@ public class Konference {
         udflugter.add(udflugt);
     }
 
+    public LocalDate getStartDato() {
+        return startDato;
+    }
+
+    public LocalDate getSlutDato() {
+        return slutDato;
+    }
+
+    public double getPrisPrDag() {
+        return prisPrDag;
+    }
 }

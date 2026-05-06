@@ -19,4 +19,8 @@ public class Ledsager {
     public void addUdflugt(Udflugt udflugt){
         udflugter.add(udflugt);
     }
+
+    public ArrayList<Udflugt> getUdflugter() {
+        return udflugter;
+    }
 }
