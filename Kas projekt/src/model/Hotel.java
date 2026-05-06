@@ -21,4 +21,12 @@ public class Hotel {
     public void addTillaeg(Tillaeg tillaeg){
         muligeTillaeg.add(tillaeg);
     }
+
+    public double getPrisEnkelt() {
+        return prisEnkelt;
+    }
+
+    public double getPrisDobbelt() {
+        return prisDobbelt;
+    }
 }

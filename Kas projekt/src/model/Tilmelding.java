@@ -1,12 +1,10 @@
 package model;
 
 import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 
 @NullMarked
@@ -18,25 +16,27 @@ public class Tilmelding {
     private boolean erForedragsHolder;
 
     //LinkAttributter
-    private Konference konference;
-    private Hotel hotel;
+    private final Konference konference;
+    private @Nullable Hotel hotel;
     private Deltager deltager;
-    private Ledsager ledsager;
-    private Firma firma;
-    private ArrayList<Tillaeg> valgteTillaeg = new ArrayList<>();
+    private @Nullable Ledsager ledsager;
+    private @Nullable Firma firma;
+    private final ArrayList<Tillaeg> valgteTillaeg = new ArrayList<>();
 
     public Tilmelding(String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager) {
         this.tilmeldingID = tilmeldingID;
         this.ankomstDato = ankomstDato;
         this.afrejseDato = afrejseDato;
         this.erForedragsHolder = erForedragsHolder;
+        this.konference = konference;
+        this.deltager = deltager;
     }
 
     public Konference getKonference() {
         return konference;
     }
 
-    public Hotel getHotel() {
+    public @Nullable Hotel getHotel() {
         return hotel;
     }
 
@@ -44,9 +44,6 @@ public class Tilmelding {
         return valgteTillaeg;
     }
 
-    public void setValgteTillaeg(ArrayList<Tillaeg> valgteTillaeg) {
-        this.valgteTillaeg = valgteTillaeg;
-    }
 
     public void setLedsager(Ledsager ledsager) {
         this.ledsager = ledsager;
@@ -56,5 +53,39 @@ public class Tilmelding {
         this.hotel = hotel;
     }
 
+    public double samletPris() {
+        double samletPris = 0;
+        int periode = (int) ankomstDato.until(afrejseDato, ChronoUnit.DAYS) + 1;
 
+        if (!erForedragsHolder) {
+            samletPris += konference.getPrisPrDag() * periode;
+        }
+
+        if (ledsager != null) {
+            ArrayList<Udflugt> udflugter = ledsager.getUdflugter();
+            if (!udflugter.isEmpty()) {
+                for (Udflugt u : udflugter) {
+                    samletPris += u.getPris();
+                }
+            }
+        }
+
+        if (hotel != null) {
+            int hotelPeriode = periode - 1; // Man betaler pr overnatning, ikke pr dag
+
+            if (ledsager != null) {
+                samletPris += hotel.getPrisDobbelt() * hotelPeriode;
+            } else {
+                samletPris += hotel.getPrisEnkelt() * hotelPeriode;
+            }
+
+            if (!valgteTillaeg.isEmpty()) {
+                for (Tillaeg t : valgteTillaeg) {
+                    samletPris += t.getPris() * hotelPeriode;
+                }
+            }
+        }
+
+        return samletPris;
+    }
 }

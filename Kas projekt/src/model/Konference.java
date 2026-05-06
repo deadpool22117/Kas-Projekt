@@ -41,4 +41,8 @@ public class Konference {
     public LocalDate getSlutDato() {
         return slutDato;
     }
+
+    public double getPrisPrDag() {
+        return prisPrDag;
+    }
 }

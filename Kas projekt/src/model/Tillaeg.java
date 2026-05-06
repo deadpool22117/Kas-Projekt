@@ -11,4 +11,8 @@ public class Tillaeg {
         this.navn = navn;
         this.pris = pris;
     }
+
+    public double getPris() {
+        return pris;
+    }
 }
