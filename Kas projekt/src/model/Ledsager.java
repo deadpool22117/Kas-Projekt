@@ -7,6 +7,7 @@ import java.util.ArrayList;
 @NullMarked
 public class Ledsager {
     private String navn;
+
     //LinkAttributter
     private final ArrayList<Udflugt> udflugter = new ArrayList<>();
     private Tilmelding tilmelding;
@@ -16,5 +17,7 @@ public class Ledsager {
         this.tilmelding = tilmelding;
     }
 
-    public addUdflugt()
+    public void addUdflugt(Udflugt udflugt){
+        udflugter.add(udflugt);
+    }
 }
