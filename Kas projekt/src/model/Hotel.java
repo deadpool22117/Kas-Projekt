@@ -34,8 +34,10 @@ public class Hotel {
 
     public void addTillaeg(Tillaeg tillaeg){
         muligeTillaeg.add(tillaeg);
-
     }
+
+
+
 
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);

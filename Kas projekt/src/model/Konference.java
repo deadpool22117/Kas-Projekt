@@ -27,6 +27,18 @@ public class Konference {
         this.prisPrDag = prisPrDag;
     }
 
+    public String getNavn() {
+        return navn;
+    }
+
+    public ArrayList<Tilmelding> getTilmeldinger() {
+        return tilmeldinger;
+    }
+
+    public ArrayList<Udflugt> getUdflugter() {
+        return udflugter;
+    }
+
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);
     }
@@ -39,7 +51,9 @@ public class Konference {
         return prisPrDag;
     }
 
-    public Collection<Hotel> getHoteller() {
-        return hoteller;
+
+    public void addHoteller(Hotel hotel){
+        hoteller.add(hotel);
     }
+
 }

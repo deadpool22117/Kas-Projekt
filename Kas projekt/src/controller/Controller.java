@@ -5,9 +5,48 @@ import model.*;
 import org.jspecify.annotations.NullMarked;
 import storage.Storage;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @NullMarked
 public class Controller {
+
+    public static ArrayList<String> deltagerePåKonference(Konference konference){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Tilmelding t: konference.getTilmeldinger()){
+            Deltager d = t.getDeltager();
+            liste.add(d.getNavn() + " - " + d.getByLand());
+        }
+        return liste;
+    }
+
+    public static ArrayList<String> udflugterPåKonference(Konference konference){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Udflugt u: konference.getUdflugter()){
+            liste.add(u.getNavn() + " | Pris: " + u.getPris() + " kr.");
+        }
+        return liste;
+    }
+
+    public static ArrayList<String> alleHoteller(Hotel hoteller){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Hotel h: Storage.getHoteller()){
+            liste.add(h.getHotelNavn() + " | Enkelt: " + h.getPrisEnkelt() + " kr." + " | Dobbelt: " + h.getPrisDobbelt()+ " kr.");
+        }
+        return liste;
+    }
+
+    public static ArrayList<String> deltagerKonferenceInfo(Deltager deltager){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Tilmelding t: deltager.getTilmeldinger()){
+            liste.add(t.getKonference().getNavn() + " | " + t.getAnkomstDato() + " -> " + t.getAfrejseDato());
+        }
+        return liste;
+
+    }
 
     public static Konference opretKonference(String name, LocalDate startDato, LocalDate slutDato, double prisPrDag) {
         Konference konference = new Konference(name, startDato, slutDato, prisPrDag);
@@ -46,11 +85,13 @@ public class Controller {
         return deltager;
     }
 
-    public static Tillaeg oprettillaeg(String navn, double pris) {
+    public static Tillaeg opretTillaeg(String navn, double pris) {
         Tillaeg tillaeg = new Tillaeg(navn, pris);
         Storage.storeTillaeg(tillaeg);
         return tillaeg;
     }
+
+
 
 
 

@@ -27,6 +27,10 @@ public class Udflugt {
         ledsagere.add(ledsager);
     }
 
+    public String getNavn() {
+        return navn;
+    }
+
     public double getPris() {
         return pris;
     }
