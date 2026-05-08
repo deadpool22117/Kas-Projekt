@@ -48,7 +48,7 @@ public class KasTest {
         mie.addUdflugt(egeskov);
         mie.addUdflugt(trapholt);
         t4.getValgteTillaeg().add(wifi);
-        IO.println("Peter samlet pris: " + t3.samletPris());
+        IO.println("Peter samlet pris: " + t4.samletPris());
 
         //----Lone-----
         Deltager lone = Controller.opretDeltager("Lone Jensen", "Adresse 5", "11357712", "Aarhus");
@@ -58,6 +58,6 @@ public class KasTest {
         jan.addUdflugt(egeskov);
         jan.addUdflugt(byrundtur);
         t5.getValgteTillaeg().add(wifi);
-        IO.println("Lone samlet pris: " + t3.samletPris());
+        IO.println("Lone samlet pris: " + t5.samletPris());
     }
 }
