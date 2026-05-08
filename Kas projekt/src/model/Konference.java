@@ -4,6 +4,7 @@ import org.jspecify.annotations.NullMarked;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @NullMarked
 
@@ -34,15 +35,11 @@ public class Konference {
         udflugter.add(udflugt);
     }
 
-    public LocalDate getStartDato() {
-        return startDato;
-    }
-
-    public LocalDate getSlutDato() {
-        return slutDato;
-    }
-
     public double getPrisPrDag() {
         return prisPrDag;
+    }
+
+    public Collection<Hotel> getHoteller() {
+        return hoteller;
     }
 }

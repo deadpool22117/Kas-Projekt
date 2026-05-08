@@ -15,11 +15,10 @@ public class Controller {
         return konference;
     }
 
-    public static Tilmelding opretTilmelding (String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager, Hotel hotel) {
+    public static Tilmelding opretTilmelding (String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager) {
         Tilmelding tilmelding = new Tilmelding(tilmeldingID, ankomstDato, afrejseDato, erForedragsHolder, konference, deltager);
         konference.addTilmelding(tilmelding);
         deltager.addTilmelding(tilmelding);
-        hotel.addTilmelding(tilmelding);
         return tilmelding;
     }
 
