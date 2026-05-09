@@ -1,10 +1,9 @@
 package model;
 
-import org.jspecify.annotations.NullMarked;
+
 
 import java.util.ArrayList;
 
-@NullMarked
 public class Hotel {
     private String hotelNavn;
     private double prisEnkelt;

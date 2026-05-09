@@ -1,5 +1,6 @@
 package storage;
 
+import gui.KonferencePane;
 import model.*;
 
 import java.util.ArrayList;
@@ -16,10 +17,10 @@ public class Storage {
 
     //--------Konferencer-------
 
+
     public static ArrayList<Konference> getKonferencer() {
         return new ArrayList<>(konferencer);
     }
-
     public static void storeKonferencer(Konference konference) {
         konferencer.add(konference);
     }

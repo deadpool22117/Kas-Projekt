@@ -1,10 +1,10 @@
 package model;
 
-import org.jspecify.annotations.NullMarked;
+
 
 import java.util.ArrayList;
 
-@NullMarked
+
 public class Ledsager {
     private String navn;
     //LinkAttributter
