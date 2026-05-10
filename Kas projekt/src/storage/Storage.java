@@ -1,9 +1,11 @@
 package storage;
 
 import model.*;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 
+@NullMarked
 public class Storage {
     private static final ArrayList<Konference> konferencer = new ArrayList<>();
     private static final ArrayList<Deltager> deltagere = new ArrayList<>();

@@ -1,13 +1,15 @@
 package model;
 
+
+
 import org.jspecify.annotations.NullMarked;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@NullMarked
 
+@NullMarked
 public class Konference {
     private String navn;
     private LocalDate startDato;
@@ -27,18 +29,6 @@ public class Konference {
         this.prisPrDag = prisPrDag;
     }
 
-    public String getNavn() {
-        return navn;
-    }
-
-    public ArrayList<Tilmelding> getTilmeldinger() {
-        return tilmeldinger;
-    }
-
-    public ArrayList<Udflugt> getUdflugter() {
-        return udflugter;
-    }
-
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);
     }
@@ -56,4 +46,23 @@ public class Konference {
         hoteller.add(hotel);
     }
 
+    public ArrayList<Hotel> getHoteller() {
+        return hoteller;
+    }
+
+    public String getNavn() {
+        return navn;
+
+    }
+    public ArrayList<Tilmelding> getTilmeldinger() {
+        return new ArrayList<>(tilmeldinger);
+    }
+    @Override
+    public String toString() {
+        return navn;
+    }
+
+    public ArrayList<Udflugt> getUdflugter() {
+        return udflugter;
+    }
 }
