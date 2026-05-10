@@ -2,12 +2,12 @@ package controller;
 
 import model.*;
 
-import org.jspecify.annotations.NullMarked;
+
 import storage.Storage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-@NullMarked
+
 public class Controller {
 
     public static ArrayList<String> deltagerePåKonference(Konference konference){

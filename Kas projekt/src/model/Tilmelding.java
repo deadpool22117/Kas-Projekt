@@ -1,13 +1,12 @@
 package model;
 
-import org.jspecify.annotations.NullMarked;
-import org.jspecify.annotations.Nullable;
+
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-@NullMarked
+
 
 public class Tilmelding {
     private String tilmeldingID;
@@ -17,10 +16,10 @@ public class Tilmelding {
 
     //LinkAttributter
     private final Konference konference;
-    private @Nullable Hotel hotel;
+    private  Hotel hotel;
     private Deltager deltager;
-    private @Nullable Ledsager ledsager;
-    private @Nullable Firma firma;
+    private Ledsager ledsager;
+    private  Firma firma;
     private final ArrayList<Tillaeg> valgteTillaeg = new ArrayList<>();
 
     public Tilmelding(String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager) {
@@ -44,7 +43,15 @@ public class Tilmelding {
         return konference;
     }
 
-    public @Nullable Hotel getHotel() {
+    public String getTilmeldingID() {
+        return tilmeldingID;
+    }
+
+    public Deltager getDeltager() {
+        return deltager;
+    }
+
+    public  Hotel getHotel() {
         return hotel;
     }
 
