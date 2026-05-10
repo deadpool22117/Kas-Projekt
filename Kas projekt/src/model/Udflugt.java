@@ -34,4 +34,8 @@ public class Udflugt {
     public double getPris() {
         return pris;
     }
+
+    public LocalDate getDato() {
+        return dato;
+    }
 }

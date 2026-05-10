@@ -23,4 +23,8 @@ public class Ledsager {
     public ArrayList<Udflugt> getUdflugter() {
         return udflugter;
     }
+
+    public String getNavn() {
+        return navn;
+    }
 }

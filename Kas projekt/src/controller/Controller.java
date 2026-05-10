@@ -16,6 +16,8 @@ public class Controller {
         for(Tilmelding t: konference.getTilmeldinger()){
             Deltager d = t.getDeltager();
             liste.add(d.getNavn() + " - " + d.getByLand());
+
+
         }
         return liste;
     }
@@ -24,7 +26,7 @@ public class Controller {
         ArrayList<String> liste = new ArrayList<>();
 
         for(Udflugt u: konference.getUdflugter()){
-            liste.add(u.getNavn() + " | Pris: " + u.getPris() + " kr.");
+            liste.add(u.getNavn() + " | " + u.getDato() + " | Pris: " + u.getPris() + " kr.");
         }
         return liste;
     }
@@ -43,9 +45,20 @@ public class Controller {
 
         for(Tilmelding t: deltager.getTilmeldinger()){
             liste.add(t.getKonference().getNavn() + " | " + t.getAnkomstDato() + " -> " + t.getAfrejseDato());
+
+            if (t.getHotel() != null) {
+                liste.add("Hotel: " + t.getHotel().getHotelNavn());
+            }
+            if(t.getLedsager() != null){
+                liste.add("Ledsager: " + t.getLedsager().getNavn());
+
+                for(Udflugt u : t.getLedsager().getUdflugter()){
+                    liste.add("Udflugt: " + u.getNavn());
+                }
+            }
+            liste.add("Samlet pris: " + t.samletPris());
         }
         return liste;
-
     }
 
     public static Konference opretKonference(String name, LocalDate startDato, LocalDate slutDato, double prisPrDag) {

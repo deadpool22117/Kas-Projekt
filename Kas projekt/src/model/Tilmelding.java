@@ -97,6 +97,11 @@ public class Tilmelding {
         return samletPris;
     }
 
-    public void setLedsager(Ledsager mie) {
+    public void setLedsager(Ledsager ledsager) {
+        this.ledsager = ledsager;
+    }
+
+    public @Nullable Ledsager getLedsager() {
+        return ledsager;
     }
 }
