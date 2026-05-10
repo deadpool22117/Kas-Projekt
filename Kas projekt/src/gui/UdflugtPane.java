@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -199,6 +200,9 @@ public class UdflugtPane extends GridPane {
         lvwUdflugter.getItems().setAll(
                 Storage.getUdflugter()
         );
+
+        cbKonference.getItems().setAll(Controller.getKonferencer());
+        cbKonference.getSelectionModel().clearSelection();
     }
 
     private void rydFelter() {
