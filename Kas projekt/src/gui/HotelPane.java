@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -133,15 +134,8 @@ public class HotelPane extends GridPane {
             return;
         }
 
-        Hotel hotel = new Hotel(
-                navn,
-                prisEnkelt,
-                prisDobbelt
-        );
 
-        Storage.storeHotel(hotel);
-
-        konference.addHoteller(hotel);
+        Controller.addHoteltoKonference(konference, Controller.opretHotel(navn, prisEnkelt, prisDobbelt));
 
         opdaterHoteller();
 
@@ -183,7 +177,7 @@ public class HotelPane extends GridPane {
 
     private void opdaterHoteller() {
         lvwHoteller.getItems().setAll(
-                Storage.getHoteller()
+                Controller.getHoteller()
         );
     }
 

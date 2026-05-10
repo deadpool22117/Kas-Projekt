@@ -6,7 +6,6 @@ import org.jspecify.annotations.NullMarked;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 
 
 @NullMarked
@@ -57,6 +56,15 @@ public class Konference {
     public ArrayList<Tilmelding> getTilmeldinger() {
         return new ArrayList<>(tilmeldinger);
     }
+
+    public LocalDate getStartDato() {
+        return startDato;
+    }
+
+    public LocalDate getSlutDato() {
+        return slutDato;
+    }
+
     @Override
     public String toString() {
         return navn;
