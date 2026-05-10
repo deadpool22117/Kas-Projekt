@@ -179,6 +179,9 @@ public class HotelPane extends GridPane {
         lvwHoteller.getItems().setAll(
                 Controller.getHoteller()
         );
+
+        cbKonference.getItems().setAll(Controller.getKonferencer());
+        cbKonference.getSelectionModel().clearSelection();
     }
 
     private void rydFelter() {
