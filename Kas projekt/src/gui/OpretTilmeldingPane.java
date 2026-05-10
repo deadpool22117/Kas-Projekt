@@ -91,7 +91,10 @@ public class OpretTilmeldingPane extends GridPane {
 
         this.add(new Label("Hotel:"), 0, 8);
         cbHotel = new ComboBox<>();
-        cbHotel.getItems().addAll(Storage.getHoteller());
+        cbKonference
+                .getSelectionModel()
+                .selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> opdaterHotellerOgUdflugter());
         this.add(cbHotel, 1, 8);
 
         // ---------------------------------------------------
@@ -140,8 +143,14 @@ public class OpretTilmeldingPane extends GridPane {
 
     public void opdater() {
         cbKonference.getItems().setAll(Storage.getKonferencer());
-        cbHotel.getItems().setAll(Storage.getHoteller());
-        lvwUdflugter.getItems().setAll(Storage.getUdflugter());
+
+        cbKonference.getSelectionModel().clearSelection();
+
+        cbHotel.getItems().clear();
+        cbHotel.getSelectionModel().clearSelection();
+
+        lvwUdflugter.getItems().clear();
+        lvwUdflugter.getSelectionModel().clearSelection();
 
     }
 
@@ -298,6 +307,18 @@ public class OpretTilmeldingPane extends GridPane {
 
         rydFelter();
     }
+        private void opdaterHotellerOgUdflugter() {
+            Konference konference =
+                    cbKonference.getSelectionModel().getSelectedItem();
+
+            cbHotel.getItems().clear();
+            lvwUdflugter.getItems().clear();
+
+            if (konference != null) {
+                cbHotel.getItems().setAll(konference.getHoteller());
+                lvwUdflugter.getItems().setAll(konference.getUdflugter());
+            }
+        }
 
 
     private void rydFelter() {
