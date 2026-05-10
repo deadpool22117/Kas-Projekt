@@ -92,6 +92,7 @@ public class Controller {
     public static Udflugt opretUdflugt(String navn, LocalDate dato, double pris, Konference konference) {
         Udflugt udflugt = new Udflugt(navn, dato, pris, konference);
         Storage.storeUdflugt(udflugt);
+        konference.addUdflugt(udflugt);
         return udflugt;
     }
 
@@ -134,10 +135,18 @@ public class Controller {
         Storage.storeTillaeg(tillaeg);
         return tillaeg;
     }
+
     public static void addHoteltoKonference (Konference konference, Hotel hotel) {
         konference.addHoteller(hotel);
     }
 
+    public static ArrayList<Hotel> getHoteller() {
+        return Storage.getHoteller();
+    }
+
+    public static ArrayList<Konference> getKonferencer() {
+        return Storage.getKonferencer();
+    }
 
 
 

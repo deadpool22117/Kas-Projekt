@@ -55,7 +55,7 @@ public class Tilmelding {
         this.ledsager = ledsager;
     }
 
-    public  Ledsager getLedsager() {
+    public @Nullable Ledsager getLedsager() {
         return ledsager;
     }
     public @Nullable Hotel getHotel() {
@@ -73,6 +73,10 @@ public class Tilmelding {
 
     public Deltager getDeltager() {
         return deltager;
+    }
+
+    public void setFirma(Firma firma) {
+        this.firma = firma;
     }
 
     public double samletPris() {
