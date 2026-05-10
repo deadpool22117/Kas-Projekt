@@ -2,12 +2,15 @@ package model;
 
 
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 
-
+@NullMarked
 public class Tilmelding {
     private String tilmeldingID;
     private LocalDate ankomstDato;
@@ -16,10 +19,10 @@ public class Tilmelding {
 
     //LinkAttributter
     private final Konference konference;
-    private  Hotel hotel;
+    private @Nullable Hotel hotel;
     private Deltager deltager;
-    private Ledsager ledsager;
-    private  Firma firma;
+    private @Nullable Ledsager ledsager;
+    private @Nullable Firma firma;
     private final ArrayList<Tillaeg> valgteTillaeg = new ArrayList<>();
 
     public Tilmelding(String tilmeldingID, LocalDate ankomstDato, LocalDate afrejseDato, boolean erForedragsHolder, Konference konference, Deltager deltager) {
@@ -50,8 +53,14 @@ public class Tilmelding {
     public Deltager getDeltager() {
         return deltager;
     }
+    public void setLedsager(Ledsager ledsager) {
+        this.ledsager = ledsager;
+    }
 
-    public  Hotel getHotel() {
+    public @Nullable Ledsager getLedsager() {
+        return ledsager;
+    }
+    public @Nullable Hotel getHotel() {
         return hotel;
     }
 
@@ -64,9 +73,6 @@ public class Tilmelding {
         this.hotel = hotel;
     }
 
-    public Deltager getDeltager() {
-        return deltager;
-    }
 
     public double samletPris() {
         double samletPris = 0;
@@ -100,15 +106,11 @@ public class Tilmelding {
                 }
             }
         }
-
         return samletPris;
     }
 
-    public void setLedsager(Ledsager ledsager) {
-        this.ledsager = ledsager;
-    }
-
-    public @Nullable Ledsager getLedsager() {
-        return ledsager;
+    @Override
+    public String toString() {
+        return tilmeldingID + " " + deltager.getNavn() + " (mblnr: " + deltager.getMobil() + ")";
     }
 }

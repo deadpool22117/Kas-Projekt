@@ -140,7 +140,7 @@ public class KonferencePane extends GridPane {
         if (konference != null) {
 
             tblTilmeldinger.getItems().setAll(
-                    Konference.getTilmeldinger()
+                    konference.getTilmeldinger()
             );
 
         }
