@@ -13,6 +13,7 @@ public class App {
 
     public static void initStorage() {
         Konference havOgHimmel = Controller.opretKonference("Hav og Himmel", LocalDate.of(2026,5, 18), LocalDate.of(2026,5,20),1500);
+        Konference LavOgHimmel = Controller.opretKonference("lav og Himmel", LocalDate.of(2027,5, 18), LocalDate.of(2028,5,20),1500);
 
         Hotel denHvideSvane = Controller.opretHotel("Den hvide svane", 1050, 1250);
         Tillaeg wifi = Controller.opretTillaeg("Wifi", 50);
