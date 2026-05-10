@@ -134,6 +134,9 @@ public class Controller {
         Storage.storeTillaeg(tillaeg);
         return tillaeg;
     }
+    public static void addHoteltoKonference (Konference konference, Hotel hotel) {
+        konference.addHoteller(hotel);
+    }
 
 
 

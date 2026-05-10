@@ -50,14 +50,12 @@ public class Tilmelding {
         return tilmeldingID;
     }
 
-    public Deltager getDeltager() {
-        return deltager;
-    }
+
     public void setLedsager(Ledsager ledsager) {
         this.ledsager = ledsager;
     }
 
-    public @Nullable Ledsager getLedsager() {
+    public  Ledsager getLedsager() {
         return ledsager;
     }
     public @Nullable Hotel getHotel() {
@@ -73,6 +71,9 @@ public class Tilmelding {
         this.hotel = hotel;
     }
 
+    public Deltager getDeltager() {
+        return deltager;
+    }
 
     public double samletPris() {
         double samletPris = 0;

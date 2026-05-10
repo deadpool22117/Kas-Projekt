@@ -131,6 +131,18 @@ public class OpretTilmeldingPane extends GridPane {
 
         btnOpret.setOnAction(event -> opretTilmeldingAction());
         btnRyd.setOnAction(event -> rydFelter());
+
+
+    }
+    //---------------------------------------------------
+    // opdater tildmeldingPane
+    // --------------------------------------------------
+
+    public void opdater() {
+        cbKonference.getItems().setAll(Storage.getKonferencer());
+        cbHotel.getItems().setAll(Storage.getHoteller());
+        lvwUdflugter.getItems().setAll(Storage.getUdflugter());
+
     }
 
     private void opretTilmeldingAction() {
@@ -286,6 +298,7 @@ public class OpretTilmeldingPane extends GridPane {
 
         rydFelter();
     }
+
 
     private void rydFelter() {
         txfNavn.clear();
