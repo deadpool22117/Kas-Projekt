@@ -2,8 +2,11 @@ package model;
 
 
 
+import org.jspecify.annotations.NullMarked;
+
 import java.util.ArrayList;
 
+@NullMarked
 public class Deltager {
     private String navn;
     private String adresse;
@@ -42,5 +45,10 @@ public class Deltager {
 
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);
+    }
+
+    @Override
+    public String toString() {
+        return navn;
     }
 }

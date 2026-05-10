@@ -1,7 +1,9 @@
 package model;
 
 
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class Tillaeg {
     private String navn;
     private double pris;

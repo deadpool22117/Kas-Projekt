@@ -2,9 +2,10 @@ package model;
 
 
 
-import java.util.ArrayList;
+import org.jspecify.annotations.NullMarked;
 
 
+@NullMarked
 public class Firma {
     private String firmaNavn;
     private String firmaTlf;

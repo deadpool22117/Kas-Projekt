@@ -23,27 +23,26 @@ public class Main extends Application {
         // ---------------------------------------------------
         // Tab 1 - Opret tilmelding
         // ---------------------------------------------------
-
+        OpretTilmeldingPane opretTilmeldingPane = new OpretTilmeldingPane();
         Tab tabOpretTilmelding = new Tab("Opret tilmelding");
         tabOpretTilmelding.setClosable(false);
-        tabOpretTilmelding.setContent(new OpretTilmeldingPane());
+        tabOpretTilmelding.setContent(opretTilmeldingPane);
 
         // ---------------------------------------------------
         // Tab 2 - Oversigt konferencer
         // ---------------------------------------------------
-
+        KonferencePane konferencePane = new KonferencePane();
         Tab tabKonferencer = new Tab("Oversigt konferencer");
         tabKonferencer.setClosable(false);
-        tabKonferencer.setContent(new KonferencePane());
+        tabKonferencer.setContent(konferencePane);
 
         // ---------------------------------------------------
         // Tab 3 - Udflugter
         // ---------------------------------------------------
-
+        UdflugtPane udflugtPane = new UdflugtPane();
         Tab tabUdflugter = new Tab("Udflugter");
         tabUdflugter.setClosable(false);
-        tabUdflugter.setContent(new UdflugtPane());
-
+        tabUdflugter.setContent(udflugtPane);
         // ---------------------------------------------------
         // Tab 4 - Hoteller
         // ---------------------------------------------------
@@ -61,6 +60,21 @@ public class Main extends Application {
         tabDeltagerInfo.setClosable(false);
         tabDeltagerInfo.setContent(new DeltagerInfoPane());
 
+        tabKonferencer.setOnSelectionChanged(event -> {
+            if (tabKonferencer.isSelected()) {
+                konferencePane.opdater();
+            }
+        });
+        tabUdflugter.setOnSelectionChanged(event -> {
+            if (tabUdflugter.isSelected()) {
+                udflugtPane.opdater();
+            }
+        });
+        tabOpretTilmelding.setOnSelectionChanged(event -> {
+            if (tabOpretTilmelding.isSelected()) {
+                opretTilmeldingPane.opdater();
+            }
+        });
 
         tabPane.getTabs().addAll(
                 tabOpretTilmelding,
@@ -69,6 +83,7 @@ public class Main extends Application {
                 tabHoteller,
                 tabDeltagerInfo
         );
+
 
         root.setCenter(tabPane);
 

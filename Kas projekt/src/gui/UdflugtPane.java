@@ -220,4 +220,9 @@ public class UdflugtPane extends GridPane {
         alert.setContentText(besked);
         alert.showAndWait();
     }
+    public void opdater() {
+        lvwUdflugter.getItems().setAll(
+                Storage.getUdflugter());
+        lvwLedsagere.getItems().clear();
+    }
 }

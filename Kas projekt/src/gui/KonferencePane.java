@@ -22,6 +22,17 @@ public class KonferencePane extends GridPane {
     private Button btnVis;
     private Button btnOpretKonference;
 
+    //---------------------------------------------------
+    // opdater panes
+    // --------------------------------------------------
+
+    public void opdater(){
+        lvwKonferencer.getItems().setAll(
+                Storage.getKonferencer());
+        tblTilmeldinger.getItems().clear();
+    }
+
+
     public KonferencePane() {
 
         this.setPadding(new Insets(20));
@@ -126,6 +137,8 @@ public class KonferencePane extends GridPane {
                 );
     }
 
+
+
     // ---------------------------------------------------
     // Vis tilmeldinger
     // ---------------------------------------------------
@@ -140,7 +153,7 @@ public class KonferencePane extends GridPane {
         if (konference != null) {
 
             tblTilmeldinger.getItems().setAll(
-                    Konference.getTilmeldinger()
+                    konference.getTilmeldinger()
             );
 
         }

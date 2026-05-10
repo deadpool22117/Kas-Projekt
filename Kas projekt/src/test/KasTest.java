@@ -23,13 +23,13 @@ public class KasTest {
 
         //----Finn-----
         Deltager finn = Controller.opretDeltager("Finn Madsen", "Adresse 1", "23357712", "Odense");
-        Tilmelding t1 = Controller.opretTilmelding("t1", LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), false, havOgHimmel, finn);
+        Tilmelding t1 = Controller.opretTilmelding(LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), false, havOgHimmel, finn);
         IO.println("Forventet pris: 4500 kr.");
         IO.println("Finn samlet pris: " + t1.samletPris());
 
         //----Niels-----
         Deltager niels = Controller.opretDeltager("Niels Petersen", "Adresse 2", "55357712", "Skive");
-        Tilmelding t2 = Controller.opretTilmelding("t2", LocalDate.of(2026,5,18), LocalDate.of(2026,5,20), false, havOgHimmel, niels);
+        Tilmelding t2 = Controller.opretTilmelding( LocalDate.of(2026,5,18), LocalDate.of(2026,5,20), false, havOgHimmel, niels);
         t2.setHotel(denHvideSvane);
         IO.println();
         IO.println("Forventet pris: 6600 kr.");
@@ -37,7 +37,7 @@ public class KasTest {
 
         //----Ulla-----
         Deltager ulla = Controller.opretDeltager("Ulla Hansen", "Adresse 3", "95357712", "København");
-        Tilmelding t3 = Controller.opretTilmelding("t3", LocalDate.of(2026,5,18), LocalDate.of(2026,5,19), false, havOgHimmel, ulla);
+        Tilmelding t3 = Controller.opretTilmelding( LocalDate.of(2026,5,18), LocalDate.of(2026,5,19), false, havOgHimmel, ulla);
         Ledsager hans = Controller.opretLedsager("Hans Hansen", t3);
         t3.setLedsager(hans);
         hans.addUdflugt(byrundtur);
@@ -47,7 +47,7 @@ public class KasTest {
 
         //----Peter-----
         Deltager peter = Controller.opretDeltager("Peter Sommer", "Adresse 4", "00357712", "Aarhus");
-        Tilmelding t4 = Controller.opretTilmelding("t4", LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), false, havOgHimmel, peter);
+        Tilmelding t4 = Controller.opretTilmelding( LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), false, havOgHimmel, peter);
         t4.setHotel(denHvideSvane);
         Ledsager mie = Controller.opretLedsager("Mie Sommer", t4);
         t4.setLedsager(mie);
@@ -60,7 +60,7 @@ public class KasTest {
 
         //----Lone-----
         Deltager lone = Controller.opretDeltager("Lone Jensen", "Adresse 5", "11357712", "Aarhus");
-        Tilmelding t5 = Controller.opretTilmelding("t5", LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), true, havOgHimmel, lone);
+        Tilmelding t5 = Controller.opretTilmelding( LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), true, havOgHimmel, lone);
         t5.setHotel(denHvideSvane);
         Ledsager jan = Controller.opretLedsager("Jan Madsen", t5);
         t5.setLedsager(jan);
