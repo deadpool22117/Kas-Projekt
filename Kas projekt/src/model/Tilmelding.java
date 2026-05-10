@@ -68,6 +68,10 @@ public class Tilmelding {
         return deltager;
     }
 
+    public boolean isErForedragsHolder() {
+        return erForedragsHolder;
+    }
+
     public double samletPris() {
         double samletPris = 0;
         int periode = (int) ankomstDato.until(afrejseDato, ChronoUnit.DAYS) + 1;
