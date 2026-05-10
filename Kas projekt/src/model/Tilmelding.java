@@ -31,6 +31,14 @@ public class Tilmelding {
         this.deltager = deltager;
     }
 
+    public LocalDate getAnkomstDato() {
+        return ankomstDato;
+    }
+
+    public LocalDate getAfrejseDato() {
+        return afrejseDato;
+    }
+
     public Konference getKonference() {
         return konference;
     }
@@ -52,12 +60,12 @@ public class Tilmelding {
     }
 
 
-    public void setLedsager(Ledsager ledsager) {
-        this.ledsager = ledsager;
-    }
-
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    public Deltager getDeltager() {
+        return deltager;
     }
 
     public double samletPris() {
@@ -94,5 +102,13 @@ public class Tilmelding {
         }
 
         return samletPris;
+    }
+
+    public void setLedsager(Ledsager ledsager) {
+        this.ledsager = ledsager;
+    }
+
+    public @Nullable Ledsager getLedsager() {
+        return ledsager;
     }
 }

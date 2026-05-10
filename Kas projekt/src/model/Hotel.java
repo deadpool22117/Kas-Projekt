@@ -3,12 +3,14 @@ package model;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Hotel {
     private String hotelNavn;
     private double prisEnkelt;
     private double prisDobbelt;
     //LinkAttributter
+    private final ArrayList<Tilmelding> tilmeldinger = new ArrayList<>();
     private final ArrayList<Tillaeg> muligeTillaeg = new ArrayList<>();
 
     public Hotel(String hotelNavn, double prisEnkelt, double prisDobbelt) {
@@ -17,8 +19,8 @@ public class Hotel {
         this.prisDobbelt = prisDobbelt;
     }
 
-    public void addTillaeg(Tillaeg tillaeg){
-        muligeTillaeg.add(tillaeg);
+    public String getHotelNavn() {
+        return hotelNavn;
     }
 
     public double getPrisEnkelt() {
@@ -27,5 +29,20 @@ public class Hotel {
 
     public double getPrisDobbelt() {
         return prisDobbelt;
+    }
+
+    public void addTillaeg(Tillaeg tillaeg){
+        muligeTillaeg.add(tillaeg);
+    }
+
+
+
+
+    public void addTilmelding(Tilmelding tilmelding) {
+        tilmeldinger.add(tilmelding);
+    }
+
+    public ArrayList<Tillaeg> getMuligeTillaeg() {
+        return muligeTillaeg;
     }
 }

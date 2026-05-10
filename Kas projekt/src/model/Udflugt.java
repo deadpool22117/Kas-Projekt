@@ -27,7 +27,15 @@ public class Udflugt {
         ledsagere.add(ledsager);
     }
 
+    public String getNavn() {
+        return navn;
+    }
+
     public double getPris() {
         return pris;
+    }
+
+    public LocalDate getDato() {
+        return dato;
     }
 }

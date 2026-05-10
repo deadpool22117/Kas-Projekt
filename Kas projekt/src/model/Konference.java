@@ -4,6 +4,7 @@ package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 
@@ -34,16 +35,13 @@ public class Konference {
         udflugter.add(udflugt);
     }
 
-    public LocalDate getStartDato() {
-        return startDato;
-    }
-
-    public LocalDate getSlutDato() {
-        return slutDato;
-    }
-
     public double getPrisPrDag() {
         return prisPrDag;
+    }
+
+
+    public void addHoteller(Hotel hotel){
+        hoteller.add(hotel);
     }
 
     public String getNavn() {
