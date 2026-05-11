@@ -140,4 +140,15 @@ public class DeltagerInfoPane extends GridPane {
         lvwDeltagere.getSelectionModel().clearSelection();
         txaInfo.clear();
     }
+    public void opdater() {
+        lvwDeltagere.getItems().setAll(
+                Controller.getDeltager()
+        );
+
+        lvwDeltagere.getItems().setAll(
+                Controller.getDeltager()
+        );
+
+        lvwDeltagere.getItems().clear();
+    }
 }

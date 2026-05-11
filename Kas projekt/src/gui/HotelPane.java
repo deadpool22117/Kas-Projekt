@@ -199,4 +199,15 @@ public class HotelPane extends GridPane {
         alert.setContentText(besked);
         alert.showAndWait();
     }
+    public void opdater() {
+        lvwHoteller.getItems().setAll(
+                Controller.getHoteller()
+        );
+
+        lvwHoteller.getItems().setAll(
+                Controller.getHoteller()
+        );
+
+
+    }
 }

@@ -12,8 +12,9 @@ import java.time.LocalDate;
 
 public class UdflugtPane extends GridPane {
 
-    private ListView<Udflugt> lvwUdflugter;
-    private ListView<Ledsager> lvwLedsagere;
+    private ListView<Konference> lvwKonferencer;
+
+    private TextArea txaInfo;
 
     private TextField txfNavn;
     private TextField txfPris;
@@ -22,7 +23,7 @@ public class UdflugtPane extends GridPane {
     private ComboBox<Konference> cbKonference;
 
     private Button btnOpretUdflugt;
-    private Button btnVisLedsagere;
+    private Button btnVisInfo;
     private Button btnRyd;
 
     public UdflugtPane() {
@@ -31,62 +32,56 @@ public class UdflugtPane extends GridPane {
         this.setVgap(10);
 
         // ---------------------------------------------------
-        // Venstre side - liste over udflugter
+        // Venstre side - konferencer
         // ---------------------------------------------------
 
-        Label lblUdflugter = new Label("Udflugter");
-        this.add(lblUdflugter, 0, 0);
+        Label lblKonferencer = new Label("Konferencer");
+        this.add(lblKonferencer, 0, 0);
 
-        lvwUdflugter = new ListView<>();
-        lvwUdflugter.setPrefWidth(250);
-        lvwUdflugter.setPrefHeight(350);
-        this.add(lvwUdflugter, 0, 1, 1, 6);
+        lvwKonferencer = new ListView<>();
+        lvwKonferencer.setPrefWidth(250);
+        lvwKonferencer.setPrefHeight(400);
+        lvwKonferencer.getItems().setAll(Controller.getKonferencer());
+        this.add(lvwKonferencer, 0, 1, 1, 6);
 
-        btnVisLedsagere = new Button("Vis ledsagere");
-        this.add(btnVisLedsagere, 0, 7);
-
-        // ---------------------------------------------------
-        // Midten - ledsagere til valgt udflugt
-        // ---------------------------------------------------
-
-        Label lblLedsagere = new Label("Ledsagere på valgt udflugt");
-        this.add(lblLedsagere, 1, 0);
-
-        lvwLedsagere = new ListView<>();
-        lvwLedsagere.setPrefWidth(250);
-        lvwLedsagere.setPrefHeight(350);
-        this.add(lvwLedsagere, 1, 1, 1, 6);
+        btnVisInfo = new Button("Vis udflugter");
+        this.add(btnVisInfo, 0, 7);
 
         // ---------------------------------------------------
-        // Højre side - opret udflugt
+        // Midten - info om udflugter
+        // ---------------------------------------------------
+
+        Label lblInfo = new Label("Udflugter for valgt konference");
+        this.add(lblInfo, 1, 0);
+
+        txaInfo = new TextArea();
+        txaInfo.setEditable(false);
+        txaInfo.setPrefWidth(500);
+        txaInfo.setPrefHeight(400);
+        this.add(txaInfo, 1, 1, 1, 6);
+
+        // ---------------------------------------------------
+        // Højre side - opret ny udflugt
         // ---------------------------------------------------
 
         Label lblOpret = new Label("Opret ny udflugt");
         this.add(lblOpret, 2, 0);
 
-        Label lblNavn = new Label("Navn:");
-        this.add(lblNavn, 2, 1);
-
+        this.add(new Label("Navn:"), 2, 1);
         txfNavn = new TextField();
         this.add(txfNavn, 3, 1);
 
-        Label lblDato = new Label("Dato:");
-        this.add(lblDato, 2, 2);
-
+        this.add(new Label("Dato:"), 2, 2);
         dpDato = new DatePicker();
         this.add(dpDato, 3, 2);
 
-        Label lblPris = new Label("Pris:");
-        this.add(lblPris, 2, 3);
-
+        this.add(new Label("Pris:"), 2, 3);
         txfPris = new TextField();
         this.add(txfPris, 3, 3);
 
-        Label lblKonference = new Label("Konference:");
-        this.add(lblKonference, 2, 4);
-
+        this.add(new Label("Konference:"), 2, 4);
         cbKonference = new ComboBox<>();
-        cbKonference.getItems().addAll(Controller.getKonferencer());
+        cbKonference.getItems().setAll(Controller.getKonferencer());
         this.add(cbKonference, 3, 4);
 
         btnOpretUdflugt = new Button("Opret udflugt");
@@ -101,16 +96,14 @@ public class UdflugtPane extends GridPane {
 
         btnOpretUdflugt.setOnAction(event -> opretUdflugtAction());
 
-        btnVisLedsagere.setOnAction(event -> visLedsagereAction());
+        btnVisInfo.setOnAction(event -> visUdflugterForKonference());
 
         btnRyd.setOnAction(event -> rydFelter());
 
-        lvwUdflugter
+        lvwKonferencer
                 .getSelectionModel()
                 .selectedItemProperty()
-                .addListener((obs, oldValue, newValue) -> visLedsagereAction());
-
-        opdaterUdflugter();
+                .addListener((obs, oldValue, newValue) -> visUdflugterForKonference());
     }
 
     private void opretUdflugtAction() {
@@ -150,50 +143,98 @@ public class UdflugtPane extends GridPane {
             return;
         }
 
-        Udflugt udflugt = Controller.opretUdflugt(navn, dato, pris, konference);
+        // ---------------------------------------------------
+        // Opret udflugt gennem Controller
+        // ---------------------------------------------------
 
+        Udflugt udflugt = Controller.opretUdflugt(
+                navn,
+                dato,
+                pris,
+                konference
+        );
 
-        opdaterUdflugter();
+        // Hvis din Controller IKKE selv gør dette,
+        // så behold denne linje.
+        // Hvis Controller allerede kalder konference.addUdflugt(...),
+        // så skal du slette denne linje.
+        konference.addUdflugt(udflugt);
+
+        opdater();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Udflugt oprettet");
         alert.setHeaderText("Udflugten blev oprettet");
         alert.setContentText(
-                "Udflugt: " + navn +
-                        "\nDato: " + dato +
-                        "\nPris: " + pris + " kr."
+                "Udflugt: " + navn
+                        + "\nKonference: " + konference.getNavn()
+                        + "\nDato: " + dato
+                        + "\nPris: " + pris + " kr."
         );
         alert.showAndWait();
 
         rydFelter();
     }
 
-    private void visLedsagereAction() {
-        lvwLedsagere.getItems().clear();
-
-        Udflugt valgtUdflugt =
-                lvwUdflugter
+    private void visUdflugterForKonference() {
+        Konference konference =
+                lvwKonferencer
                         .getSelectionModel()
                         .getSelectedItem();
 
-        if (valgtUdflugt == null) {
+        if (konference == null) {
+            txaInfo.clear();
             return;
         }
 
-        for (Ledsager ledsager : Controller.getLedsagere()) {
-            if (ledsager.getUdflugter().contains(valgtUdflugt)) {
-                lvwLedsagere.getItems().add(ledsager);
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Konference: ")
+                .append(konference.getNavn())
+                .append("\n");
+
+        sb.append("-----------------------------\n\n");
+
+        if (konference.getUdflugter().isEmpty()) {
+            sb.append("Der er ingen udflugter til denne konference.");
+        } else {
+            for (Udflugt udflugt : konference.getUdflugter()) {
+
+                sb.append("Udflugt:\n");
+                sb.append(udflugt).append("\n\n");
+
+                sb.append("Ledsagere til denne udflugt:\n");
+
+                boolean fundetLedsager = false;
+
+                for (Ledsager ledsager : Controller.getLedsagere()) {
+                    if (ledsager.getUdflugter().contains(udflugt)) {
+                        fundetLedsager = true;
+                        sb.append(" - ").append(ledsager).append("\n");
+                    }
+                }
+
+                if (!fundetLedsager) {
+                    sb.append("Ingen ledsagere tilmeldt.\n");
+                }
+
+                sb.append("\n-----------------------------\n\n");
             }
         }
+
+        txaInfo.setText(sb.toString());
     }
 
-    private void opdaterUdflugter() {
-        lvwUdflugter.getItems().setAll(
-                Controller.getUdflugter()
+    public void opdater() {
+        lvwKonferencer.getItems().setAll(
+                Controller.getKonferencer()
         );
 
-        cbKonference.getItems().setAll(Controller.getKonferencer());
-        cbKonference.getSelectionModel().clearSelection();
+        cbKonference.getItems().setAll(
+                Controller.getKonferencer()
+        );
+
+        txaInfo.clear();
     }
 
     private void rydFelter() {
@@ -204,8 +245,9 @@ public class UdflugtPane extends GridPane {
 
         cbKonference.getSelectionModel().clearSelection();
 
-        lvwUdflugter.getSelectionModel().clearSelection();
-        lvwLedsagere.getItems().clear();
+        lvwKonferencer.getSelectionModel().clearSelection();
+
+        txaInfo.clear();
     }
 
     private void visFejl(String besked) {
@@ -214,10 +256,5 @@ public class UdflugtPane extends GridPane {
         alert.setHeaderText("Noget mangler");
         alert.setContentText(besked);
         alert.showAndWait();
-    }
-    public void opdater() {
-        lvwUdflugter.getItems().setAll(
-                Controller.getUdflugter());
-        lvwLedsagere.getItems().clear();
     }
 }

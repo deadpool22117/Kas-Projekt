@@ -46,19 +46,19 @@ public class Main extends Application {
         // ---------------------------------------------------
         // Tab 4 - Hoteller
         // ---------------------------------------------------
-
+        HotelPane hotelPane = new HotelPane();
         Tab tabHoteller = new Tab("Hoteller");
         tabHoteller.setClosable(false);
-        tabHoteller.setContent(new HotelPane());
+        tabHoteller.setContent(hotelPane);
 
 
         // ---------------------------------------------------
         // Tab 5 - Info om deltager
         // ---------------------------------------------------
-
+DeltagerInfoPane deltagerInfoPane = new DeltagerInfoPane();
         Tab tabDeltagerInfo = new Tab("Info om deltager");
         tabDeltagerInfo.setClosable(false);
-        tabDeltagerInfo.setContent(new DeltagerInfoPane());
+        tabDeltagerInfo.setContent(deltagerInfoPane);
 
         tabKonferencer.setOnSelectionChanged(event -> {
             if (tabKonferencer.isSelected()) {
@@ -73,6 +73,16 @@ public class Main extends Application {
         tabOpretTilmelding.setOnSelectionChanged(event -> {
             if (tabOpretTilmelding.isSelected()) {
                 opretTilmeldingPane.opdater();
+            }
+        });
+        tabDeltagerInfo.setOnSelectionChanged(event -> {
+            if (tabDeltagerInfo.isSelected()) {
+                deltagerInfoPane.opdater();
+            }
+        });
+        tabHoteller.setOnSelectionChanged(event -> {
+            if (tabHoteller.isSelected()) {
+                hotelPane.opdater();
             }
         });
 
