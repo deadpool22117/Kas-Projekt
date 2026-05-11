@@ -1,11 +1,11 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Deltager;
 import model.Tilmelding;
-import storage.Storage;
 
 public class DeltagerInfoPane extends GridPane {
 
@@ -30,7 +30,7 @@ public class DeltagerInfoPane extends GridPane {
         lvwDeltagere = new ListView<>();
         lvwDeltagere.setPrefWidth(250);
         lvwDeltagere.setPrefHeight(400);
-        lvwDeltagere.getItems().addAll(Storage.getDeltager());
+        lvwDeltagere.getItems().addAll(Controller.getDeltager());
         this.add(lvwDeltagere, 0, 1, 1, 6);
 
         // ---------------------------------------------------
@@ -132,7 +132,7 @@ public class DeltagerInfoPane extends GridPane {
 
     private void opdaterDeltagere() {
         lvwDeltagere.getItems().setAll(
-                Storage.getDeltager()
+                Controller.getDeltager()
         );
     }
 

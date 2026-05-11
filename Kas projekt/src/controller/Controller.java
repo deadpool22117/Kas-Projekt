@@ -136,6 +136,20 @@ public class Controller {
         return tillaeg;
     }
 
+    /**
+     * create firma
+     * Pre: navn not empty, pris >= 0
+     */
+
+    public static Firma opretFirma(String navn, String firmaTlf) {
+        Firma firma = new Firma(navn, firmaTlf);
+        return firma;
+    }
+
+    public static void setFirmaToTilmelding(Firma firma, Tilmelding tilmelding) {
+        tilmelding.setFirma(firma);
+    }
+
     public static void addHoteltoKonference (Konference konference, Hotel hotel) {
         konference.addHoteller(hotel);
     }
@@ -148,6 +162,33 @@ public class Controller {
         return Storage.getKonferencer();
     }
 
+    public static ArrayList<Deltager> getDeltager() {
+        return Storage.getDeltager();
+    }
+
+    public static ArrayList<Tilmelding> getTilmeldinger() {
+        return Storage.getTilmeldinger();
+    }
+
+    public static ArrayList<Udflugt> getUdflugter() {
+        return Storage.getUdflugter();
+    }
+
+    public static void setHotel(Tilmelding tilmelding, Hotel hotel) {
+        tilmelding.setHotel(hotel);
+    }
+
+    public static void addUdflugtToLedsager(Ledsager ledsager, Udflugt udflugt) {
+        ledsager.addUdflugt(udflugt);
+    }
+
+    public static void setLedsagerToTilmelding(Tilmelding tilmelding, Ledsager ledsager) {
+        tilmelding.setLedsager(ledsager);
+    }
+
+    public static ArrayList<Ledsager> getLedsagere() {
+        return Storage.getLedsagere();
+    }
 
 
 

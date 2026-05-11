@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import model.Konference;
 import model.Ledsager;
 import model.Udflugt;
-import storage.Storage;
 
 import java.time.LocalDate;
 
@@ -87,7 +86,7 @@ public class UdflugtPane extends GridPane {
         this.add(lblKonference, 2, 4);
 
         cbKonference = new ComboBox<>();
-        cbKonference.getItems().addAll(Storage.getKonferencer());
+        cbKonference.getItems().addAll(Controller.getKonferencer());
         this.add(cbKonference, 3, 4);
 
         btnOpretUdflugt = new Button("Opret udflugt");
@@ -151,16 +150,8 @@ public class UdflugtPane extends GridPane {
             return;
         }
 
-        Udflugt udflugt = new Udflugt(
-                navn,
-                dato,
-                pris,
-                konference
-        );
+        Udflugt udflugt = Controller.opretUdflugt(navn, dato, pris, konference);
 
-        Storage.storeUdflugt(udflugt);
-
-        konference.addUdflugt(udflugt);
 
         opdaterUdflugter();
 
@@ -189,7 +180,7 @@ public class UdflugtPane extends GridPane {
             return;
         }
 
-        for (Ledsager ledsager : Storage.getLedsagere()) {
+        for (Ledsager ledsager : Controller.getLedsagere()) {
             if (ledsager.getUdflugter().contains(valgtUdflugt)) {
                 lvwLedsagere.getItems().add(ledsager);
             }
@@ -198,7 +189,7 @@ public class UdflugtPane extends GridPane {
 
     private void opdaterUdflugter() {
         lvwUdflugter.getItems().setAll(
-                Storage.getUdflugter()
+                Controller.getUdflugter()
         );
 
         cbKonference.getItems().setAll(Controller.getKonferencer());
@@ -226,7 +217,7 @@ public class UdflugtPane extends GridPane {
     }
     public void opdater() {
         lvwUdflugter.getItems().setAll(
-                Storage.getUdflugter());
+                Controller.getUdflugter());
         lvwLedsagere.getItems().clear();
     }
 }

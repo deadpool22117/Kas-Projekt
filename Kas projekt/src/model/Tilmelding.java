@@ -50,7 +50,9 @@ public class Tilmelding {
         return tilmeldingID;
     }
 
-
+    public Deltager getDeltager() {
+        return deltager;
+    }
     public void setLedsager(Ledsager ledsager) {
         this.ledsager = ledsager;
     }
@@ -71,9 +73,6 @@ public class Tilmelding {
         this.hotel = hotel;
     }
 
-    public Deltager getDeltager() {
-        return deltager;
-    }
 
     public void setFirma(Firma firma) {
         this.firma = firma;
