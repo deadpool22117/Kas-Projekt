@@ -51,6 +51,14 @@ public class Deltager {
         tilmeldinger.add(tilmelding);
     }
 
+    public double sumAfPrisforTilmeldinger() {
+        double sum = 0;
+        for (Tilmelding t : tilmeldinger) {
+            sum += t.samletPris();
+        }
+        return sum;
+    }
+
     @Override
     public String toString() {
         return navn;
