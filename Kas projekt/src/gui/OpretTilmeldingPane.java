@@ -20,10 +20,13 @@ public class OpretTilmeldingPane extends GridPane {
     private DatePicker dpAnkomst;
     private DatePicker dpAfrejse;
 
+    private CheckBox chbOpretNyDeltager;
     private CheckBox chbForedragsholder;
     private CheckBox chbLedsager;
 
     private TextField txfLedsagerNavn;
+
+    private ListView lvwDeltagere;
 
     private CheckBox chbFirma;
     private TextField txfFirmaNavn;
@@ -43,26 +46,43 @@ public class OpretTilmeldingPane extends GridPane {
         this.setHgap(10);
         this.setVgap(10);
 
+
+        // ---------------------------------------------------
+        // Deltagere
+        // -------------------------------------------------
+
+        lvwDeltagere = new ListView<>();
+        this.add(lvwDeltagere, 1, 0, 1,4);
+        lvwDeltagere.getItems().setAll(
+                Controller.getDeltager());
+
         // ---------------------------------------------------
         // Deltagerinformation
         // ---------------------------------------------------
 
-        this.add(new Label("Deltagernavn:"), 0, 0);
+       // this.add(new Label("Deltagernavn:"), 2, 0);
         txfNavn = new TextField();
-        this.add(txfNavn, 1, 0);
+        txfNavn.setPromptText("Deltagernavn");
+        this.add(txfNavn, 2, 0);
 
-        this.add(new Label("Adresse:"), 0, 1);
+        //this.add(new Label("Adresse:"), 2, 1);
         txfAdresse = new TextField();
-        this.add(txfAdresse, 1, 1);
+        txfAdresse.setPromptText("Adresse");
+        this.add(txfAdresse, 2, 1);
 
-        this.add(new Label("Mobil:"), 0, 2);
+        //this.add(new Label("Mobil:"), 2, 2);
         txfMobil = new TextField();
-        this.add(txfMobil, 1, 2);
+        txfMobil.setPromptText("Mobil");
+        this.add(txfMobil, 2, 2);
 
-        this.add(new Label("By / Land:"), 0, 3);
+        //this.add(new Label("By / Land:"), 2, 3);
         txfByLand = new TextField();
-        this.add(txfByLand, 1, 3);
+        txfByLand.setPromptText("By / Land:");
+        this.add(txfByLand, 2, 3);
 
+        chbOpretNyDeltager = new CheckBox("Opret ny deltager");
+        this.add(chbOpretNyDeltager, 0, 0);
+        chbOpretNyDeltager.setOnAction(event -> nyDeltagerChb());
         // ---------------------------------------------------
         // Datoer
         // ---------------------------------------------------
@@ -156,7 +176,7 @@ public class OpretTilmeldingPane extends GridPane {
 
         btnOpret.setOnAction(event -> opretTilmeldingAction());
         btnRyd.setOnAction(event -> rydFelter());
-
+        disableDeltagerOplysninger();
 
     }
     //---------------------------------------------------
@@ -177,15 +197,42 @@ public class OpretTilmeldingPane extends GridPane {
     }
 
     private void opretTilmeldingAction() {
+        Deltager deltager;
 
-        // ---------------------------------------------------
-        // Hent deltagerdata
-        // ---------------------------------------------------
+        if(chbOpretNyDeltager.isSelected()) {
+            // ---------------------------------------------------
+            // Hent deltagerdata
+            // ---------------------------------------------------
 
-        String navn = txfNavn.getText();
-        String adresse = txfAdresse.getText();
-        String mobil = txfMobil.getText();
-        String byLand = txfByLand.getText();
+            String navn = txfNavn.getText();
+            String adresse = txfAdresse.getText();
+            String mobil = txfMobil.getText();
+            String byLand = txfByLand.getText();
+
+
+            // ---------------------------------------------------
+            // Validering
+            // ---------------------------------------------------
+
+            if (navn.isEmpty() || adresse.isEmpty() || mobil.isEmpty() || byLand.isEmpty()) {
+                visFejl("Udfyld alle deltageroplysninger.");
+                return;
+            }
+
+
+
+            // ---------------------------------------------------
+            // Opret deltager
+            // ---------------------------------------------------
+
+            deltager = Controller.opretDeltager(navn, adresse, mobil, byLand);
+        } else {
+            deltager = (Deltager) lvwDeltagere.getSelectionModel().getSelectedItem();
+        }
+
+        Konference konference = cbKonference.getSelectionModel().getSelectedItem();
+
+        Hotel hotel = cbHotel.getSelectionModel().getSelectedItem();
 
         // ---------------------------------------------------
         // Hent datoer
@@ -200,18 +247,11 @@ public class OpretTilmeldingPane extends GridPane {
 
         boolean erForedragsholder = chbForedragsholder.isSelected();
 
-        Konference konference = cbKonference.getSelectionModel().getSelectedItem();
 
-        Hotel hotel = cbHotel.getSelectionModel().getSelectedItem();
 
         // ---------------------------------------------------
         // Validering
         // ---------------------------------------------------
-
-        if (navn.isEmpty() || adresse.isEmpty() || mobil.isEmpty() || byLand.isEmpty()) {
-            visFejl("Udfyld alle deltageroplysninger.");
-            return;
-        }
 
         if (ankomstDato == null || afrejseDato == null) {
             visFejl("Vælg både ankomstdato og afrejsedato.");
@@ -232,12 +272,6 @@ public class OpretTilmeldingPane extends GridPane {
             visFejl("Vælg en konference.");
             return;
         }
-
-        // ---------------------------------------------------
-        // Opret deltager
-        // ---------------------------------------------------
-
-        Deltager deltager = Controller.opretDeltager(navn, adresse, mobil, byLand);
 
         // ---------------------------------------------------
         // Opret tilmelding
@@ -296,7 +330,7 @@ public class OpretTilmeldingPane extends GridPane {
                 return;
             }
 
-            Controller.setFirmaToTilmelding(Controller.opretFirma(navn, firmaTlf), tilmelding);
+            Controller.setFirmaToTilmelding(Controller.opretFirma(firmaNavn, firmaTlf), tilmelding);
         }
 
         // ---------------------------------------------------
@@ -313,6 +347,16 @@ public class OpretTilmeldingPane extends GridPane {
         rydFelter();
     }
 
+    private void nyDeltagerChb() {
+        if (chbOpretNyDeltager.isSelected()) {
+            eneableDeltagerOplysninger();
+            lvwDeltagere.setDisable(true);
+        } else {
+            disableDeltagerOplysninger();
+            lvwDeltagere.setDisable(false);
+        }
+    }
+
     private void opdaterDatoerHotellerOgUdflugter() {
         Konference konference = cbKonference.getSelectionModel().getSelectedItem();
 
@@ -324,6 +368,20 @@ public class OpretTilmeldingPane extends GridPane {
             cbHotel.getItems().setAll(konference.getHoteller());
             lvwUdflugter.getItems().setAll(konference.getUdflugter());
         }
+    }
+
+    private void eneableDeltagerOplysninger() {
+        txfNavn.setDisable(false);
+        txfAdresse.setDisable(false);
+        txfMobil.setDisable(false);
+        txfByLand.setDisable(false);
+    }
+
+    private void disableDeltagerOplysninger() {
+        txfNavn.setDisable(true);
+        txfAdresse.setDisable(true);
+        txfMobil.setDisable(true);
+        txfByLand.setDisable(true);
     }
 
     private void rydFelter() {
