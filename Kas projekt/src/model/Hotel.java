@@ -1,8 +1,11 @@
 package model;
 
+
+
 import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @NullMarked
 public class Hotel {
@@ -19,8 +22,32 @@ public class Hotel {
         this.prisDobbelt = prisDobbelt;
     }
 
+    public String getHotelNavn() {
+        return hotelNavn;
+    }
+
+    public double getPrisEnkelt() {
+        return prisEnkelt;
+    }
+
+    public double getPrisDobbelt() {
+        return prisDobbelt;
+    }
+
     public void addTillaeg(Tillaeg tillaeg){
         muligeTillaeg.add(tillaeg);
+    }
 
+    public void addTilmelding(Tilmelding tilmelding) {
+        tilmeldinger.add(tilmelding);
+    }
+
+    public ArrayList<Tillaeg> getMuligeTillaeg() {
+        return muligeTillaeg;
+    }
+
+    @Override
+    public String toString() {
+        return hotelNavn;
     }
 }

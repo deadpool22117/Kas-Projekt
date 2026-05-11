@@ -1,26 +1,34 @@
 package storage;
 
+import gui.KonferencePane;
 import model.*;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 
+@NullMarked
 public class Storage {
     private static final ArrayList<Konference> konferencer = new ArrayList<>();
     private static final ArrayList<Deltager> deltagere = new ArrayList<>();
     private static final ArrayList<Tilmelding> tilmeldinger = new ArrayList<>();
-
+    private static final ArrayList<Udflugt> udflugter = new ArrayList<>();
+    private static final ArrayList<Hotel> hoteller = new ArrayList<>();
+    private static final ArrayList<Ledsager> ledsagere = new ArrayList<>();
+    private static final ArrayList<Tillaeg> tillaegs = new ArrayList<>();
 
 
     //--------Konferencer-------
+
+
     public static ArrayList<Konference> getKonferencer() {
         return new ArrayList<>(konferencer);
     }
-
     public static void storeKonferencer(Konference konference) {
         konferencer.add(konference);
     }
 
     //--------Deltager-------
+
     public static ArrayList<Deltager> getDeltager() {
         return new ArrayList<>(deltagere);
     }
@@ -30,6 +38,7 @@ public class Storage {
     }
 
     //--------Tilmelding-------
+
     public static ArrayList<Tilmelding> getTilmeldinger() {
         return new ArrayList<>(tilmeldinger);
     }
@@ -38,7 +47,41 @@ public class Storage {
         tilmeldinger.add(tilmelding);
     }
 
+    //--------udflugter-------
 
+    public static ArrayList<Udflugt> getUdflugter() {
+        return new ArrayList<>(udflugter);
+    }
+
+    public static void storeUdflugt(Udflugt udflugt) {
+        udflugter.add(udflugt);
+    }
+
+    //--------Hotel-------
+
+    public static ArrayList<Hotel> getHoteller() {
+        return new ArrayList<>(hoteller);
+    }
+
+    public static void storeHotel(Hotel hotel) {
+        hoteller.add(hotel);
+    }
+
+    //--------Ledsager-------
+
+    public static ArrayList<Ledsager> getLedsagere() {
+        return new ArrayList<>(ledsagere);
+    }
+
+    public static void storeLedsager(Ledsager ledsager) {
+        ledsagere.add(ledsager);
+    }
+
+    //--------Tillæg-------
+
+    public static void storeTillaeg(Tillaeg tillaeg) {
+        tillaegs.add(tillaeg);
+    }
 }
 
 

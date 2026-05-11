@@ -1,11 +1,15 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Hotel;
+import model.Konference;
 import model.Tilmelding;
 import storage.Storage;
+
+import javax.swing.*;
 
 public class HotelPane extends GridPane {
 
@@ -15,6 +19,8 @@ public class HotelPane extends GridPane {
     private TextField txfNavn;
     private TextField txfPrisEnkelt;
     private TextField txfPrisDobbelt;
+
+    private ComboBox<Konference> cbKonference;
 
     private Button btnOpretHotel;
     private Button btnVisDeltagere;
@@ -72,11 +78,17 @@ public class HotelPane extends GridPane {
         txfPrisDobbelt = new TextField();
         this.add(txfPrisDobbelt, 3, 3);
 
+        this.add(new Label("Konference:"), 2, 4);
+        cbKonference = new ComboBox<>();
+        cbKonference.getItems().setAll(Storage.getKonferencer());
+        this.add(cbKonference, 3, 4);
+
+
         btnOpretHotel = new Button("Opret hotel");
         this.add(btnOpretHotel, 2, 5);
 
         btnRyd = new Button("Ryd felter");
-        this.add(btnRyd, 3, 5);
+        this.add(btnRyd, 3, 6);
 
         // ---------------------------------------------------
         // Actions
@@ -99,6 +111,8 @@ public class HotelPane extends GridPane {
         String prisEnkeltTekst = txfPrisEnkelt.getText();
         String prisDobbeltTekst = txfPrisDobbelt.getText();
 
+        Konference konference = cbKonference.getSelectionModel().getSelectedItem();
+
         if (navn.isEmpty()) {
             visFejl("Indtast hotelnavn.");
             return;
@@ -120,13 +134,8 @@ public class HotelPane extends GridPane {
             return;
         }
 
-        Hotel hotel = new Hotel(
-                navn,
-                prisEnkelt,
-                prisDobbelt
-        );
 
-        Storage.storeHotel(hotel);
+        Controller.addHoteltoKonference(konference, Controller.opretHotel(navn, prisEnkelt, prisDobbelt));
 
         opdaterHoteller();
 
@@ -135,8 +144,10 @@ public class HotelPane extends GridPane {
         alert.setHeaderText("Hotellet blev oprettet");
         alert.setContentText(
                 "Hotel: " + navn
+       //                 + "\nKonference: " + konference.getNavn()
                         + "\nPris enkeltværelse: " + prisEnkelt + " kr."
                         + "\nPris dobbeltværelse: " + prisDobbelt + " kr."
+
         );
         alert.showAndWait();
 
@@ -166,8 +177,11 @@ public class HotelPane extends GridPane {
 
     private void opdaterHoteller() {
         lvwHoteller.getItems().setAll(
-                Storage.getHoteller()
+                Controller.getHoteller()
         );
+
+        cbKonference.getItems().setAll(Controller.getKonferencer());
+        cbKonference.getSelectionModel().clearSelection();
     }
 
     private void rydFelter() {

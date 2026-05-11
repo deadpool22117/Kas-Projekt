@@ -1,5 +1,6 @@
 package model;
 
+
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
@@ -10,5 +11,9 @@ public class Tillaeg {
     public Tillaeg(String navn, double pris) {
         this.navn = navn;
         this.pris = pris;
+    }
+
+    public double getPris() {
+        return pris;
     }
 }

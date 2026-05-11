@@ -24,7 +24,12 @@ public class OpretTilmeldingPane extends GridPane {
 
     private TextField txfLedsagerNavn;
 
+    private CheckBox chbFirma;
+    private TextField txfFirmaNavn;
+    private TextField txfFirmaTlf;
+
     private ComboBox<Konference> cbKonference;
+    private TextField txfKonferenceDatoer;
     private ComboBox<Hotel> cbHotel;
 
     private ListView<Udflugt> lvwUdflugter;
@@ -85,31 +90,53 @@ public class OpretTilmeldingPane extends GridPane {
         cbKonference.getItems().addAll(Storage.getKonferencer());
         this.add(cbKonference, 1, 7);
 
+        txfKonferenceDatoer = new TextField();
+        this.add(txfKonferenceDatoer, 1, 8);
+        txfKonferenceDatoer.setEditable(false);
+
+
         // ---------------------------------------------------
         // Hotel
         // ---------------------------------------------------
 
-        this.add(new Label("Hotel:"), 0, 8);
+        this.add(new Label("Hotel:"), 0, 9);
         cbHotel = new ComboBox<>();
-        cbHotel.getItems().addAll(Storage.getHoteller());
-        this.add(cbHotel, 1, 8);
+        cbKonference
+                .getSelectionModel()
+                .selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> opdaterDatoerHotellerOgUdflugter());
+        this.add(cbHotel, 1, 9);
 
         // ---------------------------------------------------
         // Ledsager
         // ---------------------------------------------------
 
         chbLedsager = new CheckBox("Har ledsager");
-        this.add(chbLedsager, 0, 9);
+        this.add(chbLedsager, 0, 10);
 
         txfLedsagerNavn = new TextField();
         txfLedsagerNavn.setPromptText("Ledsagers navn");
-        this.add(txfLedsagerNavn, 1, 9);
+        this.add(txfLedsagerNavn, 1, 10);
+
+        // ---------------------------------------------------
+        // Firma
+        // ---------------------------------------------------
+        chbFirma = new CheckBox("Firma");
+        this.add(chbFirma, 0, 11);
+
+        txfFirmaNavn = new TextField();
+        txfFirmaNavn.setPromptText("Firma navn");
+        this.add(txfFirmaNavn, 1, 11);
+
+        txfFirmaTlf = new TextField();
+        txfFirmaTlf.setPromptText("Firma Tlf.");
+        this.add(txfFirmaTlf, 2, 11);
 
         // ---------------------------------------------------
         // Udflugter
         // ---------------------------------------------------
 
-        this.add(new Label("Udflugter:"), 0, 10);
+        this.add(new Label("Udflugter:"), 0, 12);
 
         lvwUdflugter = new ListView<>();
         lvwUdflugter.getItems().addAll(Storage.getUdflugter());
@@ -117,20 +144,38 @@ public class OpretTilmeldingPane extends GridPane {
         lvwUdflugter.setPrefHeight(120);
         lvwUdflugter.setPrefWidth(300);
 
-        this.add(lvwUdflugter, 1, 10);
+        this.add(lvwUdflugter, 1, 12);
 
         // ---------------------------------------------------
         // Knapper
         // ---------------------------------------------------
 
         btnOpret = new Button("Opret tilmelding");
-        this.add(btnOpret, 0, 11);
+        this.add(btnOpret, 0, 13);
 
         btnRyd = new Button("Ryd felter");
-        this.add(btnRyd, 1, 11);
+        this.add(btnRyd, 1, 13);
 
         btnOpret.setOnAction(event -> opretTilmeldingAction());
         btnRyd.setOnAction(event -> rydFelter());
+
+
+    }
+    //---------------------------------------------------
+    // opdater tildmeldingPane
+    // --------------------------------------------------
+
+    public void opdater() {
+        cbKonference.getItems().setAll(Storage.getKonferencer());
+
+        cbKonference.getSelectionModel().clearSelection();
+
+        cbHotel.getItems().clear();
+        cbHotel.getSelectionModel().clearSelection();
+
+        lvwUdflugter.getItems().clear();
+        lvwUdflugter.getSelectionModel().clearSelection();
+
     }
 
     private void opretTilmeldingAction() {
@@ -179,6 +224,11 @@ public class OpretTilmeldingPane extends GridPane {
 
         if (afrejseDato.isBefore(ankomstDato)) {
             visFejl("Afrejsedato kan ikke være før ankomstdato.");
+            return;
+        }
+
+        if (ankomstDato.isBefore(konference.getStartDato()) || afrejseDato.isAfter(konference.getSlutDato())) {
+            visFejl("Ankomst of afrejsedato skal være inden for konferencens tidsperiode.");
             return;
         }
 
@@ -256,6 +306,28 @@ public class OpretTilmeldingPane extends GridPane {
         }
 
         // ---------------------------------------------------
+        // Opret firma hvis valgt
+        // ---------------------------------------------------
+
+        if (chbFirma.isSelected()) {
+            String firmaNavn = txfFirmaNavn.getText();
+            String firmaTlf = txfFirmaTlf.getText();
+
+            if (firmaNavn.isEmpty()) {
+                visFejl("Indtast navn på firma.");
+                return;
+            }
+
+            if (firmaTlf.isEmpty()) {
+                visFejl("Indtast firma tlf.");
+                return;
+            }
+
+            Firma firma = new Firma(firmaNavn, firmaTlf);
+            tilmelding.setFirma(firma);
+        }
+
+        // ---------------------------------------------------
         // Opret relationer
         // ---------------------------------------------------
 
@@ -286,6 +358,19 @@ public class OpretTilmeldingPane extends GridPane {
 
         rydFelter();
     }
+    private void opdaterDatoerHotellerOgUdflugter() {
+            Konference konference =
+                    cbKonference.getSelectionModel().getSelectedItem();
+
+            cbHotel.getItems().clear();
+            lvwUdflugter.getItems().clear();
+
+            if (konference != null) {
+                txfKonferenceDatoer.setText("Fra " + konference.getStartDato() + " til " + konference.getSlutDato());
+                cbHotel.getItems().setAll(konference.getHoteller());
+                lvwUdflugter.getItems().setAll(konference.getUdflugter());
+            }
+    }
 
     private void rydFelter() {
         txfNavn.clear();
@@ -300,6 +385,11 @@ public class OpretTilmeldingPane extends GridPane {
         chbLedsager.setSelected(false);
 
         txfLedsagerNavn.clear();
+
+        txfFirmaNavn.clear();
+        txfFirmaTlf.clear();
+
+        txfKonferenceDatoer.clear();
 
         cbKonference.getSelectionModel().clearSelection();
         cbHotel.getSelectionModel().clearSelection();

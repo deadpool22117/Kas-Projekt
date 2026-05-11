@@ -1,5 +1,7 @@
 package model;
 
+
+
 import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
@@ -43,5 +45,10 @@ public class Deltager {
 
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);
+    }
+
+    @Override
+    public String toString() {
+        return navn;
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+
+
 import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
@@ -16,8 +18,20 @@ public class Ledsager {
         this.tilmelding = tilmelding;
     }
 
-    public void addUdflugt(){
-
+    public void addUdflugt(Udflugt udflugt){
+        udflugter.add(udflugt);
     }
 
+    public ArrayList<Udflugt> getUdflugter() {
+        return udflugter;
+    }
+
+    public String getNavn() {
+        return navn;
+    }
+
+    @Override
+    public String toString() {
+        return navn + " (" + tilmelding.getDeltager().getNavn() + " mblnr: " + tilmelding.getDeltager().getMobil() + ")";
+    }
 }

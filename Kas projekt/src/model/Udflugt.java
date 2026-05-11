@@ -1,12 +1,14 @@
 package model;
 
+
+
 import org.jspecify.annotations.NullMarked;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-@NullMarked
 
+@NullMarked
 public class Udflugt {
     private String navn;
     private LocalDate dato;
@@ -15,4 +17,32 @@ public class Udflugt {
     //LinkAttributter
     private Konference konference;
     private final ArrayList<Ledsager> ledsagere = new ArrayList<>();
+
+    public Udflugt(String navn, LocalDate dato, double pris, Konference konference) {
+        this.navn = navn;
+        this.dato = dato;
+        this.pris = pris;
+        this.konference = konference;
+    }
+
+    public void addLedsager(Ledsager ledsager){
+        ledsagere.add(ledsager);
+    }
+
+    public String getNavn() {
+        return navn;
+    }
+
+    public double getPris() {
+        return pris;
+    }
+
+    public LocalDate getDato() {
+        return dato;
+    }
+
+    @Override
+    public String toString() {
+        return navn;
+    }
 }
