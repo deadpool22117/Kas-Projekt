@@ -10,5 +10,8 @@
     <orderEntry type="library" name="jspecify" level="application" />
     <orderEntry type="library" name="openjfx.javafx.controls" level="project" />
     <orderEntry type="library" name="jspecify" level="project" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="application" />
+    <orderEntry type="library" name="openjfx.javafx.controls" level="application" />
   </component>
 </module>

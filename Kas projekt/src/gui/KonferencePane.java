@@ -5,11 +5,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import model.Konference;
-import model.Tilmelding;
-
-
 import java.time.LocalDate;
+import model.*;
 
 
 public class KonferencePane extends GridPane {
