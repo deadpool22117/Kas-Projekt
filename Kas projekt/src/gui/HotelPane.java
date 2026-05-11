@@ -127,7 +127,7 @@ public class HotelPane extends GridPane {
         this.add(btnRyd, 3, 12);
 
         Button btnGemHotelInfo = new Button("Gem hotelinfo");
-        this.add(btnGemHotelInfo, 2, 4);
+        this.add(btnGemHotelInfo, 1, 8);
 
 
 
