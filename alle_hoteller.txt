@@ -1,0 +1,40 @@
+Alle hoteller
+=============================
+
+Hotelinformation
+-----------------------------
+Hotel: Den hvide svane
+Pris enkeltværelse: 1050.0 kr.
+Pris dobbeltværelse: 1250.0 kr.
+
+Hotellets mulige tillæg
+-----------------------------
+ - Wifi - 50.0 kr.
+
+=============================
+
+Hotelinformation
+-----------------------------
+Hotel: Høtel Phønix
+Pris enkeltværelse: 700.0 kr.
+Pris dobbeltværelse: 800.0 kr.
+
+Hotellets mulige tillæg
+-----------------------------
+ - Wifi - 75.0 kr.
+ - Bad - 200.0 kr.
+
+=============================
+
+Hotelinformation
+-----------------------------
+Hotel: Pension Tusindfryd
+Pris enkeltværelse: 500.0 kr.
+Pris dobbeltværelse: 600.0 kr.
+
+Hotellets mulige tillæg
+-----------------------------
+ - Morgenmad - 100.0 kr.
+
+=============================
+

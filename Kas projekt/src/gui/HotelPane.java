@@ -135,7 +135,7 @@ public class HotelPane extends GridPane {
         // Actions
         // ---------------------------------------------------
 
-        btnGemHotelInfo.setOnAction(event -> gemHotelInfoAction());
+        btnGemHotelInfo.setOnAction(event -> gemAlleHotellerInfoAction());
 
         btnVisInfo.setOnAction(event -> visHotelInfo());
 
@@ -414,22 +414,48 @@ public class HotelPane extends GridPane {
             this.pris = pris;
         }
     }
-    private void gemHotelInfoAction() {
-        Hotel hotel = lvwHoteller.getSelectionModel().getSelectedItem();
+    private void gemAlleHotellerInfoAction() {
+        StringBuilder sb = new StringBuilder();
 
-        if (hotel == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Intet hotel valgt");
-            alert.setHeaderText(null);
-            alert.setContentText("Vælg et hotel først.");
-            alert.showAndWait();
-            return;
+        sb.append("Alle hoteller\n");
+        sb.append("=============================\n\n");
+
+        for (Hotel hotel : Controller.getHoteller()) {
+
+            sb.append("Hotelinformation\n");
+            sb.append("-----------------------------\n");
+
+            sb.append("Hotel: ")
+                    .append(hotel.getHotelNavn())
+                    .append("\n");
+
+            sb.append("Pris enkeltværelse: ")
+                    .append(hotel.getPrisEnkelt())
+                    .append(" kr.\n");
+
+            sb.append("Pris dobbeltværelse: ")
+                    .append(hotel.getPrisDobbelt())
+                    .append(" kr.\n\n");
+
+            sb.append("Hotellets mulige tillæg\n");
+            sb.append("-----------------------------\n");
+
+            if (hotel.getTillaeg().isEmpty()) {
+                sb.append("Ingen tillæg.\n");
+            } else {
+                for (Tillaeg tillaeg : hotel.getTillaeg()) {
+                    sb.append(" - ")
+                            .append(tillaeg)
+                            .append("\n");
+                }
+            }
+
+            sb.append("\n=============================\n\n");
         }
 
-        // Opdaterer text area med info om det valgte hotel
-        visHotelInfo();
+        txaInfo.setText(sb.toString());
 
-        File out = new File("hotelinfo.txt");
+        File out = new File("alle_hoteller.txt");
 
         try (PrintWriter writer = new PrintWriter(out)) {
             writer.print(txaInfo.getText());
@@ -437,7 +463,7 @@ public class HotelPane extends GridPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Gemt");
             alert.setHeaderText(null);
-            alert.setContentText("Hotelinformationen er gemt i hotelinfo.txt");
+            alert.setContentText("Alle hoteller er gemt i alle_hoteller.txt");
             alert.showAndWait();
 
         } catch (FileNotFoundException ex) {

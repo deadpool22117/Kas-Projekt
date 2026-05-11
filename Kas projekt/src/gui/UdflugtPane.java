@@ -94,14 +94,14 @@ public class UdflugtPane extends GridPane {
         this.add(btnRyd, 3, 6);
 
         Button btnGemUdflugtInfo = new Button("Gem udflugtsinfo");
-        this.add(btnGemUdflugtInfo, 2, 4);
+        this.add(btnGemUdflugtInfo, 1, 8);
 
 
         // ---------------------------------------------------
         // Actions
         // ---------------------------------------------------
 
-        btnGemUdflugtInfo.setOnAction(event -> gemUdflugtInfoAction());
+        btnGemUdflugtInfo.setOnAction(event -> gemAlleUdflugterInfoAction() );
 
         btnOpretUdflugt.setOnAction(event -> opretUdflugtAction());
 
@@ -266,22 +266,69 @@ public class UdflugtPane extends GridPane {
         alert.setContentText(besked);
         alert.showAndWait();
     }
-    private void gemUdflugtInfoAction() {
-        Konference konference = lvwKonferencer.getSelectionModel().getSelectedItem();
+    private void gemAlleUdflugterInfoAction() {
+        StringBuilder sb = new StringBuilder();
 
-        if (konference == null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Ingen konference valgt");
-            alert.setHeaderText(null);
-            alert.setContentText("Vælg en konference først.");
-            alert.showAndWait();
-            return;
+        sb.append("Alle udflugter\n");
+        sb.append("=============================\n\n");
+
+        for (Konference konference : Controller.getKonferencer()) {
+
+            sb.append("Konference: ")
+                    .append(konference.getNavn())
+                    .append("\n");
+
+            sb.append("-----------------------------\n");
+
+            if (konference.getUdflugter().isEmpty()) {
+                sb.append("Ingen udflugter til denne konference.\n\n");
+            } else {
+                for (Udflugt udflugt : konference.getUdflugter()) {
+
+                    sb.append("Udflugtinformation\n");
+                    sb.append("-----------------------------\n");
+
+                    sb.append("Navn: ")
+                            .append(udflugt.getNavn())
+                            .append("\n");
+
+                    sb.append("Dato: ")
+                            .append(udflugt.getDato())
+                            .append("\n");
+
+                    sb.append("Pris: ")
+                            .append(udflugt.getPris())
+                            .append(" kr.\n\n");
+
+                    sb.append("Ledsagere til denne udflugt\n");
+                    sb.append("-----------------------------\n");
+
+                    boolean fundetLedsager = false;
+
+                    for (Ledsager ledsager : Controller.getLedsagere()) {
+                        if (ledsager.getUdflugter().contains(udflugt)) {
+                            fundetLedsager = true;
+
+                            sb.append(" - ")
+                                    .append(ledsager)
+                                    .append("\n");
+                        }
+                    }
+
+                    if (!fundetLedsager) {
+                        sb.append("Ingen ledsagere tilmeldt.\n");
+                    }
+
+                    sb.append("\n");
+                }
+            }
+
+            sb.append("=============================\n\n");
         }
 
-        // Opdaterer text area med udflugtsinfo for valgt konference
-        visUdflugterForKonference();
+        txaInfo.setText(sb.toString());
 
-        File out = new File("udflugtsinfo.txt");
+        File out = new File("alle_udflugter.txt");
 
         try (PrintWriter writer = new PrintWriter(out)) {
             writer.print(txaInfo.getText());
@@ -289,7 +336,7 @@ public class UdflugtPane extends GridPane {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Gemt");
             alert.setHeaderText(null);
-            alert.setContentText("Udflugtsinformationen er gemt i udflugtsinfo.txt");
+            alert.setContentText("Alle udflugter er gemt i alle_udflugter.txt");
             alert.showAndWait();
 
         } catch (FileNotFoundException ex) {

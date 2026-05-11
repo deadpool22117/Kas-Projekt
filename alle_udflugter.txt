@@ -1,0 +1,39 @@
+Alle udflugter
+=============================
+
+Konference: Hav og Himmel
+-----------------------------
+Udflugtinformation
+-----------------------------
+Navn: Egeskov
+Dato: 2026-05-19
+Pris: 75.0 kr.
+
+Ledsagere til denne udflugt
+-----------------------------
+ - Mie Sommer (Peter Sommer mblnr: 00357712)
+ - Jan Madsen (Lone Jensen mblnr: 11357712)
+
+Udflugtinformation
+-----------------------------
+Navn: Trapholt
+Dato: 2026-05-20
+Pris: 200.0 kr.
+
+Ledsagere til denne udflugt
+-----------------------------
+ - Mie Sommer (Peter Sommer mblnr: 00357712)
+
+Udflugtinformation
+-----------------------------
+Navn: Byrundtur
+Dato: 2026-05-18
+Pris: 125.0 kr.
+
+Ledsagere til denne udflugt
+-----------------------------
+ - Hans Hansen (Ulla Hansen mblnr: 95357712)
+ - Jan Madsen (Lone Jensen mblnr: 11357712)
+
+=============================
+
