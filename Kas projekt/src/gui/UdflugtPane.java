@@ -8,6 +8,9 @@ import model.Konference;
 import model.Ledsager;
 import model.Udflugt;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
 public class UdflugtPane extends GridPane {
@@ -90,9 +93,15 @@ public class UdflugtPane extends GridPane {
         btnRyd = new Button("Ryd felter");
         this.add(btnRyd, 3, 6);
 
+        Button btnGemUdflugtInfo = new Button("Gem udflugtsinfo");
+        this.add(btnGemUdflugtInfo, 2, 4);
+
+
         // ---------------------------------------------------
         // Actions
         // ---------------------------------------------------
+
+        btnGemUdflugtInfo.setOnAction(event -> gemUdflugtInfoAction());
 
         btnOpretUdflugt.setOnAction(event -> opretUdflugtAction());
 
@@ -256,5 +265,39 @@ public class UdflugtPane extends GridPane {
         alert.setHeaderText("Noget mangler");
         alert.setContentText(besked);
         alert.showAndWait();
+    }
+    private void gemUdflugtInfoAction() {
+        Konference konference = lvwKonferencer.getSelectionModel().getSelectedItem();
+
+        if (konference == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Ingen konference valgt");
+            alert.setHeaderText(null);
+            alert.setContentText("Vælg en konference først.");
+            alert.showAndWait();
+            return;
+        }
+
+        // Opdaterer text area med udflugtsinfo for valgt konference
+        visUdflugterForKonference();
+
+        File out = new File("udflugtsinfo.txt");
+
+        try (PrintWriter writer = new PrintWriter(out)) {
+            writer.print(txaInfo.getText());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Gemt");
+            alert.setHeaderText(null);
+            alert.setContentText("Udflugtsinformationen er gemt i udflugtsinfo.txt");
+            alert.showAndWait();
+
+        } catch (FileNotFoundException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fejl");
+            alert.setHeaderText(null);
+            alert.setContentText("Filen kunne ikke gemmes.");
+            alert.showAndWait();
+        }
     }
 }

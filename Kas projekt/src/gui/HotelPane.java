@@ -9,6 +9,10 @@ import model.Konference;
 import model.Tillaeg;
 import model.Tilmelding;
 import model.Deltager;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class HotelPane extends GridPane {
@@ -92,6 +96,7 @@ public class HotelPane extends GridPane {
         cbKonference.getItems().setAll(Controller.getKonferencer());
         this.add(cbKonference, 3, 4);
 
+
         // ---------------------------------------------------
         // Tillæg
         // ---------------------------------------------------
@@ -121,9 +126,16 @@ public class HotelPane extends GridPane {
         btnRyd = new Button("Ryd felter");
         this.add(btnRyd, 3, 12);
 
+        Button btnGemHotelInfo = new Button("Gem hotelinfo");
+        this.add(btnGemHotelInfo, 2, 4);
+
+
+
         // ---------------------------------------------------
         // Actions
         // ---------------------------------------------------
+
+        btnGemHotelInfo.setOnAction(event -> gemHotelInfoAction());
 
         btnVisInfo.setOnAction(event -> visHotelInfo());
 
@@ -353,6 +365,8 @@ public class HotelPane extends GridPane {
 
         txaInfo.setText(sb.toString());
     }
+
+
     public void opdater() {
         lvwHoteller.getItems().setAll(
                 Controller.getHoteller()
@@ -398,6 +412,40 @@ public class HotelPane extends GridPane {
         private TillaegData(String navn, double pris) {
             this.navn = navn;
             this.pris = pris;
+        }
+    }
+    private void gemHotelInfoAction() {
+        Hotel hotel = lvwHoteller.getSelectionModel().getSelectedItem();
+
+        if (hotel == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Intet hotel valgt");
+            alert.setHeaderText(null);
+            alert.setContentText("Vælg et hotel først.");
+            alert.showAndWait();
+            return;
+        }
+
+        // Opdaterer text area med info om det valgte hotel
+        visHotelInfo();
+
+        File out = new File("hotelinfo.txt");
+
+        try (PrintWriter writer = new PrintWriter(out)) {
+            writer.print(txaInfo.getText());
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Gemt");
+            alert.setHeaderText(null);
+            alert.setContentText("Hotelinformationen er gemt i hotelinfo.txt");
+            alert.showAndWait();
+
+        } catch (FileNotFoundException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Fejl");
+            alert.setHeaderText(null);
+            alert.setContentText("Filen kunne ikke gemmes.");
+            alert.showAndWait();
         }
     }
 }

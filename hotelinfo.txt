@@ -1,0 +1,36 @@
+Hotelinformation
+-----------------------------
+Hotel: Den hvide svane
+Pris enkeltværelse: 1050.0 kr.
+Pris dobbeltværelse: 1250.0 kr.
+
+Hotellets mulige tillæg
+-----------------------------
+- Wifi | 50.0 kr.
+
+Tilmeldinger på hotellet
+-----------------------------
+Tilmelding: t2
+Deltager: Niels Petersen
+Konference: Hav og Himmel
+Periode: 2026-05-18 -> 2026-05-20
+Valgte tillæg på tilmeldingen:
+Ingen valgte tillæg.
+Samlet pris: 6600.0 kr.
+-----------------------------
+Tilmelding: t4
+Deltager: Peter Sommer
+Konference: Hav og Himmel
+Periode: 2026-05-18 -> 2026-05-20
+Valgte tillæg på tilmeldingen:
+- Wifi | 50.0 kr.
+Samlet pris: 7375.0 kr.
+-----------------------------
+Tilmelding: t5
+Deltager: Lone Jensen
+Konference: Hav og Himmel
+Periode: 2026-05-18 -> 2026-05-20
+Valgte tillæg på tilmeldingen:
+- Wifi | 50.0 kr.
+Samlet pris: 2800.0 kr.
+-----------------------------
