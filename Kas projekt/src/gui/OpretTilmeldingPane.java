@@ -35,6 +35,7 @@ public class OpretTilmeldingPane extends GridPane {
     private ComboBox<Konference> cbKonference;
     private TextField txfKonferenceDatoer;
     private ComboBox<Hotel> cbHotel;
+    private ListView<Tillaeg> lvwTillaeg;
 
     private ListView<Udflugt> lvwUdflugter;
 
@@ -124,6 +125,21 @@ public class OpretTilmeldingPane extends GridPane {
         cbHotel = new ComboBox<>();
         cbKonference.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> opdaterDatoerHotellerOgUdflugter());
         this.add(cbHotel, 1, 9);
+
+        cbHotel.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((obs, oldValue, newValue) ->
+                        visTillaeg()
+                );
+
+        // ---------------------------------------------------
+        // Tillæg
+        // ---------------------------------------------------
+
+        this.add(new Label("Tillæg"), 2, 8);
+        lvwTillaeg = new ListView<>();
+        lvwTillaeg.setPrefHeight(100);
+        this.add(lvwTillaeg, 2, 9, 3, 1);
 
         // ---------------------------------------------------
         // Ledsager
@@ -287,6 +303,15 @@ public class OpretTilmeldingPane extends GridPane {
 
         if (hotel != null) {
             Controller.setHotel(tilmelding, hotel);
+
+            ArrayList<Tillaeg> tillaeg = new ArrayList<>(
+                    lvwTillaeg.getSelectionModel().getSelectedItems()
+            );
+
+            for (Tillaeg t : tillaeg) {
+                Controller.addTillaegToTilmelding(t, tilmelding);
+                Controller.addTillaegToHotel(t, hotel);
+            }
         }
 
         // ---------------------------------------------------
@@ -355,6 +380,18 @@ public class OpretTilmeldingPane extends GridPane {
             disableDeltagerOplysninger();
             lvwDeltagere.setDisable(false);
         }
+    }
+
+    private void visTillaeg() {
+        Hotel hotel = cbHotel.getSelectionModel().getSelectedItem();
+
+        if (hotel != null) {
+            lvwTillaeg.getItems().setAll(
+                    hotel.getTillaeg()
+            );
+        } else {
+        lvwTillaeg.getItems().clear();
+    }
     }
 
     private void opdaterDatoerHotellerOgUdflugter() {
