@@ -7,6 +7,9 @@ import javafx.scene.layout.GridPane;
 import model.Deltager;
 import model.Tilmelding;
 
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
 public class DeltagerInfoPane extends GridPane {
 
     private ListView<Deltager> lvwDeltagere;
@@ -14,6 +17,8 @@ public class DeltagerInfoPane extends GridPane {
     private Button btnVisInfo;
     private Button btnOpdater;
     private Button btnRyd;
+    private Button btnSoeg;
+    private TextField txfSoegning;
 
     public DeltagerInfoPane() {
         this.setPadding(new Insets(20));
@@ -27,41 +32,50 @@ public class DeltagerInfoPane extends GridPane {
         Label lblDeltagere = new Label("Deltagere");
         this.add(lblDeltagere, 0, 0);
 
+        txfSoegning = new TextField();
+        txfSoegning.setPromptText("Indtast navn");
+        this.add(txfSoegning,0,1 );
+
         lvwDeltagere = new ListView<>();
         lvwDeltagere.setPrefWidth(250);
         lvwDeltagere.setPrefHeight(400);
         lvwDeltagere.getItems().addAll(Controller.getDeltager());
-        this.add(lvwDeltagere, 0, 1, 1, 6);
+        this.add(lvwDeltagere, 0, 2, 2, 6);
 
         // ---------------------------------------------------
         // Højre side - info
         // ---------------------------------------------------
 
         Label lblInfo = new Label("Information om deltager");
-        this.add(lblInfo, 1, 0);
+        this.add(lblInfo, 2, 1);
 
         txaInfo = new TextArea();
         txaInfo.setPrefWidth(500);
         txaInfo.setPrefHeight(400);
         txaInfo.setEditable(false);
-        this.add(txaInfo, 1, 1, 2, 6);
+        this.add(txaInfo, 2, 2, 2, 6);
 
         // ---------------------------------------------------
         // Knapper
         // ---------------------------------------------------
 
+        btnSoeg = new Button("Søg");
+        this.add(btnSoeg, 1, 1);
+
         btnVisInfo = new Button("Vis info");
-        this.add(btnVisInfo, 0, 7);
+        this.add(btnVisInfo, 0, 8);
 
         btnOpdater = new Button("Opdater liste");
-        this.add(btnOpdater, 1, 7);
+        this.add(btnOpdater, 1, 8);
 
         btnRyd = new Button("Ryd");
-        this.add(btnRyd, 2, 7);
+        this.add(btnRyd, 2, 8);
 
         // ---------------------------------------------------
         // Actions
         // ---------------------------------------------------
+
+        btnSoeg.setOnAction(event -> opdaterDeltagere());
 
         btnVisInfo.setOnAction(event -> visInfoAction());
 
@@ -131,9 +145,42 @@ public class DeltagerInfoPane extends GridPane {
     }
 
     private void opdaterDeltagere() {
-        lvwDeltagere.getItems().setAll(
-                Controller.getDeltager()
-        );
+        lvwDeltagere.getItems().clear();
+
+        ArrayList<Deltager> deltagere = Controller.getDeltager();
+
+        if (txfSoegning.getText().isEmpty()) {
+            lvwDeltagere.getItems().setAll(deltagere);
+
+        } else {
+            Deltager deltager = linearSearchDeltager(deltagere, txfSoegning.getText().toUpperCase());
+
+            if (deltager != null) {
+                lvwDeltagere.getItems().add(deltager);
+
+            } else {
+
+                for (Deltager d : deltagere) {
+                    if (d.getNavn().toUpperCase().contains(txfSoegning.getText().toUpperCase())) {
+                        lvwDeltagere.getItems().add(d);
+                    }
+                }
+            }
+        }
+    }
+
+    private Deltager linearSearchDeltager(ArrayList<Deltager> deltagere, String name) {
+        Deltager deltager = null;
+        int i = 0;
+        while (deltager == null && i < deltagere.size()) {
+            Deltager d = deltagere.get(i);
+            if (d.getNavn().toUpperCase().equals(name)) {
+                deltager = d;
+            } else {
+                i++;
+            }
+        }
+        return deltager;
     }
 
     private void ryd() {
