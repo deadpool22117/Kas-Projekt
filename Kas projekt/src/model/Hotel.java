@@ -1,24 +1,17 @@
 package model;
 
-
-
-import org.jspecify.annotations.NullMarked;
-
-import org.jspecify.annotations.NullMarked;
-
 import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 @NullMarked
 public class Hotel {
     private String hotelNavn;
     private double prisEnkelt;
     private double prisDobbelt;
-    //LinkAttributter
+
+    private final ArrayList<Tillaeg> tillaeg = new ArrayList<>();
     private final ArrayList<Tilmelding> tilmeldinger = new ArrayList<>();
-    private final ArrayList<Tillaeg> muligeTillaeg = new ArrayList<>();
 
     public Hotel(String hotelNavn, double prisEnkelt, double prisDobbelt) {
         this.hotelNavn = hotelNavn;
@@ -38,16 +31,20 @@ public class Hotel {
         return prisDobbelt;
     }
 
-    public void addTillaeg(Tillaeg tillaeg){
-        muligeTillaeg.add(tillaeg);
+    public void addTillaeg(Tillaeg tillaeg) {
+        this.tillaeg.add(tillaeg);
+    }
+
+    public ArrayList<Tillaeg> getTillaeg() {
+        return new ArrayList<>(tillaeg);
     }
 
     public void addTilmelding(Tilmelding tilmelding) {
         tilmeldinger.add(tilmelding);
     }
 
-    public ArrayList<Tillaeg> getMuligeTillaeg() {
-        return muligeTillaeg;
+    public ArrayList<Tilmelding> getTilmeldinger() {
+        return new ArrayList<>(tilmeldinger);
     }
 
     @Override

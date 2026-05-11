@@ -78,7 +78,9 @@ public class Tilmelding {
         this.firma = firma;
     }
 
-
+    public void addTillaeg(Tillaeg tillaeg) {
+        valgteTillaeg.add(tillaeg);
+    }
 
     public double samletPris() {
         double samletPris = 0;

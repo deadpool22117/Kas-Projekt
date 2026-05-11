@@ -1,6 +1,5 @@
 package model;
 
-
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked
@@ -13,7 +12,16 @@ public class Tillaeg {
         this.pris = pris;
     }
 
+    public String getNavn() {
+        return navn;
+    }
+
     public double getPris() {
         return pris;
+    }
+
+    @Override
+    public String toString() {
+        return navn + " - " + pris + " kr.";
     }
 }
