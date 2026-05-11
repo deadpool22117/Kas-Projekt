@@ -4,8 +4,10 @@ import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+
 import model.*;
 
 public class OpretTilmeldingPane extends GridPane {
@@ -100,10 +102,7 @@ public class OpretTilmeldingPane extends GridPane {
 
         this.add(new Label("Hotel:"), 0, 9);
         cbHotel = new ComboBox<>();
-        cbKonference
-                .getSelectionModel()
-                .selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> opdaterDatoerHotellerOgUdflugter());
+        cbKonference.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> opdaterDatoerHotellerOgUdflugter());
         this.add(cbHotel, 1, 9);
 
         // ---------------------------------------------------
@@ -201,11 +200,9 @@ public class OpretTilmeldingPane extends GridPane {
 
         boolean erForedragsholder = chbForedragsholder.isSelected();
 
-        Konference konference =
-                cbKonference.getSelectionModel().getSelectedItem();
+        Konference konference = cbKonference.getSelectionModel().getSelectedItem();
 
-        Hotel hotel =
-                cbHotel.getSelectionModel().getSelectedItem();
+        Hotel hotel = cbHotel.getSelectionModel().getSelectedItem();
 
         // ---------------------------------------------------
         // Validering
@@ -246,8 +243,7 @@ public class OpretTilmeldingPane extends GridPane {
         // Opret tilmelding
         // ---------------------------------------------------
 
-        String tilmeldingID =
-                "T" + (Controller.getTilmeldinger().size() + 1);
+        String tilmeldingID = "T" + (Controller.getTilmeldinger().size() + 1);
 
         Tilmelding tilmelding = Controller.opretTilmelding(ankomstDato, afrejseDato, erForedragsholder, konference, deltager);
 
@@ -274,12 +270,7 @@ public class OpretTilmeldingPane extends GridPane {
 
             Ledsager ledsager = Controller.opretLedsager(ledsagerNavn, tilmelding);
 
-            ArrayList<Udflugt> valgteUdflugter =
-                    new ArrayList<>(
-                            lvwUdflugter
-                                    .getSelectionModel()
-                                    .getSelectedItems()
-                    );
+            ArrayList<Udflugt> valgteUdflugter = new ArrayList<>(lvwUdflugter.getSelectionModel().getSelectedItems());
 
             for (Udflugt udflugt : valgteUdflugter) {
                 Controller.addUdflugtToLedsager(ledsager, udflugt);
@@ -308,7 +299,6 @@ public class OpretTilmeldingPane extends GridPane {
             Controller.setFirmaToTilmelding(Controller.opretFirma(navn, firmaTlf), tilmelding);
         }
 
-
         // ---------------------------------------------------
         // Vis besked
         // ---------------------------------------------------
@@ -316,28 +306,24 @@ public class OpretTilmeldingPane extends GridPane {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Tilmelding oprettet");
         alert.setHeaderText("Tilmelding blev oprettet");
-        alert.setContentText(
-                "Deltager: " + deltager.getNavn()
-                        + "\nTilmelding ID: " + tilmeldingID
-                        + "\nSamlet pris: " + tilmelding.samletPris() + " kr."
-        );
+        alert.setContentText("Deltager: " + deltager.getNavn() + "\nTilmelding ID: " + tilmeldingID + "\nSamlet pris: " + tilmelding.samletPris() + " kr.");
 
         alert.showAndWait();
 
         rydFelter();
     }
+
     private void opdaterDatoerHotellerOgUdflugter() {
-            Konference konference =
-                    cbKonference.getSelectionModel().getSelectedItem();
+        Konference konference = cbKonference.getSelectionModel().getSelectedItem();
 
-            cbHotel.getItems().clear();
-            lvwUdflugter.getItems().clear();
+        cbHotel.getItems().clear();
+        lvwUdflugter.getItems().clear();
 
-            if (konference != null) {
-                txfKonferenceDatoer.setText("Fra " + konference.getStartDato() + " til " + konference.getSlutDato());
-                cbHotel.getItems().setAll(konference.getHoteller());
-                lvwUdflugter.getItems().setAll(konference.getUdflugter());
-            }
+        if (konference != null) {
+            txfKonferenceDatoer.setText("Fra " + konference.getStartDato() + " til " + konference.getSlutDato());
+            cbHotel.getItems().setAll(konference.getHoteller());
+            lvwUdflugter.getItems().setAll(konference.getUdflugter());
+        }
     }
 
     private void rydFelter() {
