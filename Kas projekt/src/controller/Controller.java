@@ -183,9 +183,7 @@ public class Controller {
         hotel.addTilmelding(tilmelding);
     }
 
-    public static ArrayList<Tilmelding> getHotelTilmeldinger(Hotel hotel) {
-        return hotel.getTilmeldinger();
-    }
+
 
     public static void addUdflugtToLedsager(Ledsager ledsager, Udflugt udflugt) {
         ledsager.addUdflugt(udflugt);
