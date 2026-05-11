@@ -5,9 +5,11 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import java.time.LocalDate;
-import model.*;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+import model.*;
 
 public class KonferencePane extends GridPane {
 
@@ -18,6 +20,10 @@ public class KonferencePane extends GridPane {
     private TableColumn<Tilmelding, String> colID;
     private TableColumn<Tilmelding, String> colDeltager;
     private TableColumn<Tilmelding, Double> colPris;
+
+    private TableColumn<Tilmelding, String> colDageTilStart;
+    private TableColumn<Tilmelding, String> colDageDeltager;
+    private TableColumn<Tilmelding, String> colLedsager;
 
     private TextField txfKonferenceNavn;
     private TextField txfprisPrDag;
@@ -32,12 +38,13 @@ public class KonferencePane extends GridPane {
     // opdater panes
     // --------------------------------------------------
 
-    public void opdater(){
+    public void opdater() {
         lvwKonferencer.getItems().setAll(
-                Controller.getKonferencer());
+                Controller.getKonferencer()
+        );
+
         tblTilmeldinger.getItems().clear();
     }
-
 
     public KonferencePane() {
 
@@ -52,7 +59,7 @@ public class KonferencePane extends GridPane {
         Label lblKonferencer =
                 new Label("Konferencer");
 
-        this.add(lblKonferencer, 0, 1);
+        this.add(lblKonferencer, 0, 0);
 
         lvwKonferencer = new ListView<>();
 
@@ -66,7 +73,7 @@ public class KonferencePane extends GridPane {
         this.add(lvwKonferencer, 0, 1);
 
         // ---------------------------------------------------
-        // TableView
+        // TableView med tilmeldinger
         // ---------------------------------------------------
 
         Label lblTilmeldinger =
@@ -80,11 +87,9 @@ public class KonferencePane extends GridPane {
         colID.setCellValueFactory(
                 new PropertyValueFactory<>("tilmeldingID")
         );
-
         colID.setPrefWidth(120);
 
         colDeltager = new TableColumn<>("Deltager");
-
         colDeltager.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(
                         cellData.getValue()
@@ -92,26 +97,95 @@ public class KonferencePane extends GridPane {
                                 .getNavn()
                 )
         );
-
-        colDeltager.setPrefWidth(200);
+        colDeltager.setPrefWidth(150);
 
         colPris = new TableColumn<>("Pris");
-
         colPris.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleObjectProperty<>(
                         cellData.getValue().samletPris()
                 )
         );
+        colPris.setPrefWidth(80);
 
-        colPris.setPrefWidth(100);
+        // ---------------------------------------------------
+        // Dage til deltager starter
+        // ---------------------------------------------------
+
+        colDageTilStart = new TableColumn<>("Dage til start");
+        colDageTilStart.setCellValueFactory(cellData -> {
+            Tilmelding tilmelding = cellData.getValue();
+
+            LocalDate iDag = LocalDate.now();
+
+            LocalDate startDato = tilmelding.getAnkomstDato();
+
+            long dageTilStart =
+                    ChronoUnit.DAYS.between(iDag, startDato);
+
+            String tekst;
+
+            if (dageTilStart > 0) {
+                tekst = dageTilStart + " dage";
+            } else if (dageTilStart == 0) {
+                tekst = "Starter i dag";
+            } else {
+                tekst = "Er startet/slut";
+            }
+
+            return new javafx.beans.property.SimpleStringProperty(tekst);
+        });
+        colDageTilStart.setPrefWidth(120);
+
+        // ---------------------------------------------------
+        // Hvor mange dage deltageren deltager
+        // ---------------------------------------------------
+
+        colDageDeltager = new TableColumn<>("Dage deltager");
+        colDageDeltager.setCellValueFactory(cellData -> {
+            Tilmelding tilmelding = cellData.getValue();
+
+            LocalDate startDato = tilmelding.getAnkomstDato();
+            LocalDate slutDato = tilmelding.getAfrejseDato();
+
+            long antalDage =
+                    ChronoUnit.DAYS.between(startDato, slutDato) + 1;
+
+            return new javafx.beans.property.SimpleStringProperty(
+                    antalDage + " dage"
+            );
+        });
+        colDageDeltager.setPrefWidth(120);
+
+        // ---------------------------------------------------
+        // Om der er ledsager
+        // ---------------------------------------------------
+
+        colLedsager = new TableColumn<>("Ledsager");
+        colLedsager.setCellValueFactory(cellData -> {
+            Tilmelding tilmelding = cellData.getValue();
+
+            String tekst;
+
+            if (tilmelding.getLedsager() == null) {
+                tekst = "Nej";
+            } else {
+                tekst = "Ja - " + tilmelding.getLedsager().getNavn();
+            }
+
+            return new javafx.beans.property.SimpleStringProperty(tekst);
+        });
+        colLedsager.setPrefWidth(180);
 
         tblTilmeldinger.getColumns().addAll(
                 colID,
                 colDeltager,
-                colPris
+                colPris,
+                colDageTilStart,
+                colDageDeltager,
+                colLedsager
         );
 
-        tblTilmeldinger.setPrefWidth(450);
+        tblTilmeldinger.setPrefWidth(800);
         tblTilmeldinger.setPrefHeight(400);
 
         this.add(tblTilmeldinger, 1, 1, 4, 1);
@@ -126,13 +200,11 @@ public class KonferencePane extends GridPane {
         txfKonferenceNavn = new TextField();
         this.add(txfKonferenceNavn, 1, 3);
 
-
         Label lblPrisPrDag = new Label("Pris pr dag");
         this.add(lblPrisPrDag, 1, 4);
 
         txfprisPrDag = new TextField();
         this.add(txfprisPrDag, 1, 5);
-
 
         this.add(new Label("Startdato:"), 2, 2);
         dpStartDato = new DatePicker();
@@ -147,7 +219,6 @@ public class KonferencePane extends GridPane {
         // ---------------------------------------------------
 
         btnVis = new Button("Vis tilmeldinger");
-
         this.add(btnVis, 0, 2);
 
         btnOpretKonference =
@@ -160,6 +231,7 @@ public class KonferencePane extends GridPane {
         // ---------------------------------------------------
 
         btnVis.setOnAction(event -> visTilmeldinger());
+
         btnOpretKonference.setOnAction(actionEvent -> opretKonference());
 
         lvwKonferencer
@@ -169,8 +241,6 @@ public class KonferencePane extends GridPane {
                         visTilmeldinger()
                 );
     }
-
-
 
     // ---------------------------------------------------
     // Vis tilmeldinger
@@ -189,6 +259,8 @@ public class KonferencePane extends GridPane {
                     konference.getTilmeldinger()
             );
 
+        } else {
+            tblTilmeldinger.getItems().clear();
         }
     }
 
@@ -205,13 +277,13 @@ public class KonferencePane extends GridPane {
         }
 
         double prisPrDag;
+
         try {
             prisPrDag = Double.parseDouble(prisPrDagTekst);
         } catch (NumberFormatException ex) {
             visFejl("Indtast venligst et tal");
             return;
         }
-
 
         if (startDato == null || slutDato == null) {
             visFejl("Vælg både startdato og slutdato.");
@@ -223,7 +295,12 @@ public class KonferencePane extends GridPane {
             return;
         }
 
-        Controller.opretKonference(konferenceNavn, startDato, slutDato, prisPrDag);
+        Controller.opretKonference(
+                konferenceNavn,
+                startDato,
+                slutDato,
+                prisPrDag
+        );
 
         opdaterKonferencer();
 
@@ -232,10 +309,9 @@ public class KonferencePane extends GridPane {
         alert.setHeaderText("Konferencen blev oprettet");
         alert.setContentText(
                 "Konference: " + konferenceNavn
-                        + "\nPris Pr dag: " + prisPrDag + " kr."
+                        + "\nPris pr dag: " + prisPrDag + " kr."
                         + "\nStartdato: " + startDato
                         + "\nSlutdato: " + slutDato
-
         );
         alert.showAndWait();
 
@@ -264,4 +340,3 @@ public class KonferencePane extends GridPane {
         );
     }
 }
-
