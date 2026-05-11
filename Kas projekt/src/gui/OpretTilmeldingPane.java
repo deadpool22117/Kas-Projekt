@@ -210,6 +210,7 @@ public class OpretTilmeldingPane extends GridPane {
         lvwUdflugter.getItems().clear();
         lvwUdflugter.getSelectionModel().clearSelection();
 
+        lvwDeltagere.getItems().setAll(Controller.getDeltager());
     }
 
     private void opretTilmeldingAction() {
@@ -368,7 +369,7 @@ public class OpretTilmeldingPane extends GridPane {
         alert.setContentText("Deltager: " + deltager.getNavn() + "\nTilmelding ID: " + tilmeldingID + "\nSamlet pris: " + tilmelding.samletPris() + " kr.");
 
         alert.showAndWait();
-
+        lvwDeltagere.getItems().setAll(Controller.getDeltager());
         rydFelter();
     }
 

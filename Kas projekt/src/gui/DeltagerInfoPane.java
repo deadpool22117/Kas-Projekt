@@ -139,6 +139,10 @@ public class DeltagerInfoPane extends GridPane {
 
                 sb.append("-----------------------------\n");
             }
+            sb.append("Samlet pris for alle tilmeldinger: ")
+                    .append(deltager.sumAfPrisforTilmeldinger())
+                    .append(" kr.\n");
+            sb.append("-----------------------------\n");
         }
 
         txaInfo.setText(sb.toString());

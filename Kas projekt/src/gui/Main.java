@@ -73,6 +73,7 @@ DeltagerInfoPane deltagerInfoPane = new DeltagerInfoPane();
         tabOpretTilmelding.setOnSelectionChanged(event -> {
             if (tabOpretTilmelding.isSelected()) {
                 opretTilmeldingPane.opdater();
+
             }
         });
         tabDeltagerInfo.setOnSelectionChanged(event -> {
