@@ -46,6 +46,10 @@ public class Hotel {
         tilmeldinger.add(tilmelding);
     }
 
+    public ArrayList<Tilmelding> getTilmeldinger() {
+        return tilmeldinger;
+    }
+
     public ArrayList<Tillaeg> getMuligeTillaeg() {
         return muligeTillaeg;
     }

@@ -177,14 +177,24 @@ public class Controller {
 
     public static void setHotel(Tilmelding tilmelding, Hotel hotel) {
         tilmelding.setHotel(hotel);
+        hotel.addTilmelding(tilmelding);
+    }
+
+    public static ArrayList<Tilmelding> getHotelTilmeldinger(Hotel hotel) {
+        return hotel.getTilmeldinger();
     }
 
     public static void addUdflugtToLedsager(Ledsager ledsager, Udflugt udflugt) {
         ledsager.addUdflugt(udflugt);
+        udflugt.addLedsager(ledsager);
     }
 
     public static void addTillaegToHotel(Tillaeg tillaeg, Hotel hotel) {
+        hotel.addTillaeg(tillaeg);
+    }
 
+    public static void addTillaegToTilmelding(Tillaeg tillaeg, Tilmelding tilmelding) {
+        tilmelding.addTillaeg(tillaeg);
     }
 
     public static ArrayList<Ledsager> getLedsagere() {

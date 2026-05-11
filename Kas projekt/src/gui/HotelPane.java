@@ -9,6 +9,7 @@ import model.Konference;
 import model.Tilmelding;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class HotelPane extends GridPane {
 
@@ -165,13 +166,7 @@ public class HotelPane extends GridPane {
             return;
         }
 
-        for (Tilmelding tilmelding : Controller.getTilmeldinger()) {
-            if (tilmelding.getHotel() != null
-                    && tilmelding.getHotel().equals(valgtHotel)) {
-
-                lvwTilmeldinger.getItems().add(tilmelding);
-            }
-        }
+        lvwTilmeldinger.getItems().addAll(Controller.getHotelTilmeldinger(valgtHotel));
     }
 
     private void opdaterHoteller() {
