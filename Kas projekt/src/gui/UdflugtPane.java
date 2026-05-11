@@ -163,10 +163,7 @@ public class UdflugtPane extends GridPane {
                 konference
         );
 
-        // Hvis din Controller IKKE selv gør dette,
-        // så behold denne linje.
-        // Hvis Controller allerede kalder konference.addUdflugt(...),
-        // så skal du slette denne linje.
+
         konference.addUdflugt(udflugt);
 
         opdater();
