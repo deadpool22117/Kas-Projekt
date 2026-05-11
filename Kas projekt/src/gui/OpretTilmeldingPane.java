@@ -285,7 +285,6 @@ public class OpretTilmeldingPane extends GridPane {
                 Controller.addUdflugtToLedsager(ledsager, udflugt);
             }
 
-            Controller.setLedsagerToTilmelding(tilmelding, ledsager);
         }
 
         // ---------------------------------------------------

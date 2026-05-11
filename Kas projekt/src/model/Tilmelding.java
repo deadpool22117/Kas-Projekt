@@ -78,6 +78,8 @@ public class Tilmelding {
         this.firma = firma;
     }
 
+
+
     public double samletPris() {
         double samletPris = 0;
         int periode = (int) ankomstDato.until(afrejseDato, ChronoUnit.DAYS) + 1;

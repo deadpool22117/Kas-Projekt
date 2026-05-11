@@ -112,6 +112,7 @@ public class Controller {
      */
     public static Ledsager opretLedsager(String navn, Tilmelding tilmelding) {
         Ledsager ledsager = new Ledsager(navn, tilmelding);
+        tilmelding.setLedsager(ledsager);
         Storage.storeLedsager(ledsager);
         return ledsager;
     }
@@ -182,8 +183,8 @@ public class Controller {
         ledsager.addUdflugt(udflugt);
     }
 
-    public static void setLedsagerToTilmelding(Tilmelding tilmelding, Ledsager ledsager) {
-        tilmelding.setLedsager(ledsager);
+    public static void addTillaegToHotel(Tillaeg tillaeg, Hotel hotel) {
+
     }
 
     public static ArrayList<Ledsager> getLedsagere() {

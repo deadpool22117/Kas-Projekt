@@ -48,7 +48,6 @@ public class App {
         Deltager ulla = Controller.opretDeltager("Ulla Hansen", "Adresse 3", "95357712", "København");
         Tilmelding t3 = Controller.opretTilmelding( LocalDate.of(2026,5,18), LocalDate.of(2026,5,19), false, havOgHimmel, ulla);
         Ledsager hans = Controller.opretLedsager("Hans Hansen", t3);
-        t3.setLedsager(hans);
         hans.addUdflugt(byrundtur);
 
         //----Peter-----
@@ -56,7 +55,6 @@ public class App {
         Tilmelding t4 = Controller.opretTilmelding( LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), false, havOgHimmel, peter);
         t4.setHotel(denHvideSvane);
         Ledsager mie = Controller.opretLedsager("Mie Sommer", t4);
-        t4.setLedsager(mie);
         mie.addUdflugt(egeskov);
         mie.addUdflugt(trapholt);
         t4.getValgteTillaeg().add(wifi);
@@ -66,7 +64,6 @@ public class App {
         Tilmelding t5 = Controller.opretTilmelding( LocalDate.of(2026,5,18),LocalDate.of(2026,5,20), true, havOgHimmel, lone);
         t5.setHotel(denHvideSvane);
         Ledsager jan = Controller.opretLedsager("Jan Madsen", t5);
-        t5.setLedsager(jan);
         jan.addUdflugt(egeskov);
         jan.addUdflugt(byrundtur);
         t5.getValgteTillaeg().add(wifi);
