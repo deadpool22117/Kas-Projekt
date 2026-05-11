@@ -7,7 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import model.Konference;
 import model.Tilmelding;
-import storage.Storage;
+
 
 import java.time.LocalDate;
 
@@ -37,7 +37,7 @@ public class KonferencePane extends GridPane {
 
     public void opdater(){
         lvwKonferencer.getItems().setAll(
-                Storage.getKonferencer());
+                Controller.getKonferencer());
         tblTilmeldinger.getItems().clear();
     }
 
@@ -60,7 +60,7 @@ public class KonferencePane extends GridPane {
         lvwKonferencer = new ListView<>();
 
         lvwKonferencer.getItems().addAll(
-                Storage.getKonferencer()
+                Controller.getKonferencer()
         );
 
         lvwKonferencer.setPrefWidth(250);

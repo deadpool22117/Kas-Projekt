@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import model.Hotel;
 import model.Konference;
 import model.Tilmelding;
-import storage.Storage;
 
 import javax.swing.*;
 
@@ -41,7 +40,7 @@ public class HotelPane extends GridPane {
         lvwHoteller = new ListView<>();
         lvwHoteller.setPrefWidth(250);
         lvwHoteller.setPrefHeight(350);
-        lvwHoteller.getItems().addAll(Storage.getHoteller());
+        lvwHoteller.getItems().addAll(Controller.getHoteller());
         this.add(lvwHoteller, 0, 1, 1, 6);
 
         btnVisDeltagere = new Button("Vis deltagere på hotel");
@@ -80,7 +79,7 @@ public class HotelPane extends GridPane {
 
         this.add(new Label("Konference:"), 2, 4);
         cbKonference = new ComboBox<>();
-        cbKonference.getItems().setAll(Storage.getKonferencer());
+        cbKonference.getItems().setAll(Controller.getKonferencer());
         this.add(cbKonference, 3, 4);
 
 
@@ -166,7 +165,7 @@ public class HotelPane extends GridPane {
             return;
         }
 
-        for (Tilmelding tilmelding : Storage.getTilmeldinger()) {
+        for (Tilmelding tilmelding : Controller.getTilmeldinger()) {
             if (tilmelding.getHotel() != null
                     && tilmelding.getHotel().equals(valgtHotel)) {
 

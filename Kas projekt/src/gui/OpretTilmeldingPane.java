@@ -1,13 +1,12 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import model.*;
-import storage.Storage;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import model.*;
 
 public class OpretTilmeldingPane extends GridPane {
 
@@ -87,7 +86,7 @@ public class OpretTilmeldingPane extends GridPane {
 
         this.add(new Label("Konference:"), 0, 7);
         cbKonference = new ComboBox<>();
-        cbKonference.getItems().addAll(Storage.getKonferencer());
+        cbKonference.getItems().addAll(Controller.getKonferencer());
         this.add(cbKonference, 1, 7);
 
         txfKonferenceDatoer = new TextField();
@@ -139,7 +138,7 @@ public class OpretTilmeldingPane extends GridPane {
         this.add(new Label("Udflugter:"), 0, 12);
 
         lvwUdflugter = new ListView<>();
-        lvwUdflugter.getItems().addAll(Storage.getUdflugter());
+        lvwUdflugter.getItems().addAll(Controller.getUdflugter());
         lvwUdflugter.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         lvwUdflugter.setPrefHeight(120);
         lvwUdflugter.setPrefWidth(300);
@@ -166,7 +165,7 @@ public class OpretTilmeldingPane extends GridPane {
     // --------------------------------------------------
 
     public void opdater() {
-        cbKonference.getItems().setAll(Storage.getKonferencer());
+        cbKonference.getItems().setAll(Controller.getKonferencer());
 
         cbKonference.getSelectionModel().clearSelection();
 
@@ -241,35 +240,23 @@ public class OpretTilmeldingPane extends GridPane {
         // Opret deltager
         // ---------------------------------------------------
 
-        Deltager deltager = new Deltager(
-                navn,
-                adresse,
-                mobil,
-                byLand
-        );
+        Deltager deltager = Controller.opretDeltager(navn, adresse, mobil, byLand);
 
         // ---------------------------------------------------
         // Opret tilmelding
         // ---------------------------------------------------
 
         String tilmeldingID =
-                "T" + (Storage.getTilmeldinger().size() + 1);
+                "T" + (Controller.getTilmeldinger().size() + 1);
 
-        Tilmelding tilmelding = new Tilmelding(
-                tilmeldingID,
-                ankomstDato,
-                afrejseDato,
-                erForedragsholder,
-                konference,
-                deltager
-        );
+        Tilmelding tilmelding = Controller.opretTilmelding(ankomstDato, afrejseDato, erForedragsholder, konference, deltager);
 
         // ---------------------------------------------------
         // Sæt hotel hvis valgt
         // ---------------------------------------------------
 
         if (hotel != null) {
-            tilmelding.setHotel(hotel);
+            Controller.setHotel(tilmelding, hotel);
         }
 
         // ---------------------------------------------------
@@ -285,10 +272,7 @@ public class OpretTilmeldingPane extends GridPane {
                 return;
             }
 
-            Ledsager ledsager = new Ledsager(
-                    ledsagerNavn,
-                    tilmelding
-            );
+            Ledsager ledsager = Controller.opretLedsager(ledsagerNavn, tilmelding);
 
             ArrayList<Udflugt> valgteUdflugter =
                     new ArrayList<>(
@@ -298,11 +282,10 @@ public class OpretTilmeldingPane extends GridPane {
                     );
 
             for (Udflugt udflugt : valgteUdflugter) {
-                ledsager.addUdflugt(udflugt);
+                Controller.addUdflugtToLedsager(ledsager, udflugt);
             }
 
-            tilmelding.setLedsager(ledsager);
-            Storage.storeLedsager(ledsager);
+            Controller.setLedsagerToTilmelding(tilmelding, ledsager);
         }
 
         // ---------------------------------------------------
@@ -323,23 +306,9 @@ public class OpretTilmeldingPane extends GridPane {
                 return;
             }
 
-            Firma firma = new Firma(firmaNavn, firmaTlf);
-            tilmelding.setFirma(firma);
+            Controller.setFirmaToTilmelding(Controller.opretFirma(navn, firmaTlf), tilmelding);
         }
 
-        // ---------------------------------------------------
-        // Opret relationer
-        // ---------------------------------------------------
-
-        deltager.addTilmelding(tilmelding);
-        konference.addTilmelding(tilmelding);
-
-        // ---------------------------------------------------
-        // Gem i Storage
-        // ---------------------------------------------------
-
-        Storage.storeDeltager(deltager);
-        Storage.storeTilmeldinger(tilmelding);
 
         // ---------------------------------------------------
         // Vis besked
