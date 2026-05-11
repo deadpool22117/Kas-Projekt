@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -135,6 +136,13 @@ public class DeltagerInfoPane extends GridPane {
                 Storage.getDeltager()
         );
     }
+    public void opdater(){
+        lvwDeltagere.getItems().setAll(
+                Storage.getDeltager());
+        lvwDeltagere.getItems().clear();
+
+    }
+
 
     private void ryd() {
         lvwDeltagere.getSelectionModel().clearSelection();

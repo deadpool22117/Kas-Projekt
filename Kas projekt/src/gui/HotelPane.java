@@ -183,6 +183,12 @@ public class HotelPane extends GridPane {
         cbKonference.getItems().setAll(Controller.getKonferencer());
         cbKonference.getSelectionModel().clearSelection();
     }
+    public void opdater(){
+        lvwHoteller.getItems().setAll(
+                Storage.getHoteller());
+        lvwHoteller.getItems().clear();
+        cbKonference.getItems().setAll(Controller.getKonferencer());
+    }
 
     private void rydFelter() {
         txfNavn.clear();
