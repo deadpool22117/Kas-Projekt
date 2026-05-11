@@ -2,8 +2,10 @@ package test;
 
 import controller.Controller;
 import model.*;
+import storage.Storage;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class KasTest {
     public static void main(String[] args) {
@@ -70,5 +72,66 @@ public class KasTest {
         IO.println();
         IO.println("Forventet pris: 2800 kr.");
         IO.println("Lone samlet pris: " + t5.samletPris());
+
+
+    }
+
+    public static ArrayList<String> deltagerePåKonference(Konference konference){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Tilmelding t: konference.getTilmeldinger()){
+            Deltager d = t.getDeltager();
+            liste.add(d.getNavn() + " - " + d.getByLand());
+            if(t.isErForedragsHolder()){
+                liste.add(d.getNavn() + " - " + d.getByLand() + " | Foredragsholder: Ja" );
+            } else{
+                liste.add(d.getNavn() + " - " + d.getByLand() + " | Foredragsholder: Nej" );
+            }
+        }
+        return liste;
+    }
+
+    //Liste over udflugter til konference
+    public static ArrayList<String> udflugterPåKonference(Konference konference){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Udflugt u: konference.getUdflugter()){
+            liste.add(u.getNavn() + " | " + u.getDato() + " | Pris: " + u.getPris() + " kr.");
+        }
+        return liste;
+    }
+
+    //Liste over alle hoteller til konference
+    public static ArrayList<String> alleHoteller(Hotel hoteller){
+        ArrayList<String> liste = new ArrayList<>();
+
+        for(Hotel h: Storage.getHoteller()){
+            liste.add(h.getHotelNavn() + " | Enkelt: " + h.getPrisEnkelt() + " kr." + " | Dobbelt: " + h.getPrisDobbelt()+ " kr.");
+        }
+        return liste;
+    }
+
+    public static ArrayList<String> deltagerKonferenceInfo(Deltager deltager){
+        ArrayList<String> liste = new ArrayList<>();
+
+        IO.println("Hav og himmel: Liste over deltagere");
+        IO.println("-----------------------------------");
+
+        for(Tilmelding t: deltager.getTilmeldinger()){
+            liste.add(t.getKonference().getNavn() + " | " + t.getAnkomstDato() + " -> " + t.getAfrejseDato());
+
+            if (t.getHotel() != null) {
+                liste.add("Hotel: " + t.getHotel().getHotelNavn());
+            }
+            if(t.getLedsager() != null){
+                liste.add("Ledsager: " + t.getLedsager().getNavn());
+
+                for(Udflugt u : t.getLedsager().getUdflugter()){
+                    liste.add("Udflugt: " + u.getNavn());
+                }
+            }
+            liste.add("Samlet pris: " + t.samletPris());
+        }
+        return liste;
     }
 }

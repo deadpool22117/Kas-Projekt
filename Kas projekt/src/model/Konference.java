@@ -51,6 +51,11 @@ public class Konference {
     public static ArrayList<Tilmelding> getTilmeldinger() {
         return new ArrayList<>(tilmeldinger);
     }
+
+    public ArrayList<Udflugt> getUdflugter() {
+        return udflugter;
+    }
+
     @Override
     public String toString() {
         return navn;

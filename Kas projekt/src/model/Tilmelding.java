@@ -2,6 +2,8 @@ package model;
 
 
 
+import org.jspecify.annotations.Nullable;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -62,10 +64,6 @@ public class Tilmelding {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
-    }
-
-    public Deltager getDeltager() {
-        return deltager;
     }
 
     public boolean isErForedragsHolder() {
